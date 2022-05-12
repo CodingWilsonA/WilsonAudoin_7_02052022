@@ -6,11 +6,13 @@
       <input type="email" name="email" v-model="email" placeholder="Email">
       <input type="password" name="password" v-model="password" placeholder="Mot de passe">
     </div>
-    <button>S'inscrire</button>
+    <button @click="register">S'inscrire</button>
   </div>
 </template>
 
 <script>
+import AuthService from '../services/AuthService'
+
 export default {
   data() {
     return {
@@ -18,6 +20,16 @@ export default {
       lastName: '',
       email: '',
       password: ''
+    }
+  },
+  methods: {
+    async register() {
+      await AuthService.register({
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password
+      })
     }
   }
 }
