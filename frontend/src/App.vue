@@ -1,8 +1,9 @@
 <template>
   <div id="app">
+    <img class="homeLogo" alt="Groupomania logo" src="./assets/icon.svg">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Se connecter</router-link> |
+      <router-link to="/signup">S'inscrire</router-link>
     </nav>
     <router-view/>
   </div>
@@ -14,7 +15,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: #2c3e50;
+}
+
+.homeLogo {
+  width: 350px;
 }
 
 nav {
