@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import AuthService from '../services/AuthService'
+import SignupService from '../services/SignupService'
 
 export default {
   data() {
@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     async register() {
-      await AuthService.register({
+      await SignupService.register({
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
