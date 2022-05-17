@@ -1,10 +1,10 @@
 <template>
   <div class="signupFields">
     <div class='signupFields--container'>
-      <input type="text" name="prenom" v-model="firstName" placeholder="Prénom">
-      <input type="text" name="nom" v-model="lastName" placeholder="Nom">
-      <input type="email" name="email" v-model="email" placeholder="Email">
-      <input type="password" name="password" v-model="password" placeholder="Mot de passe">
+      <v-text-field label="Prénom" v-model="firstName"></v-text-field>
+      <v-text-field label="Nom" v-model="lastName"></v-text-field>
+      <v-text-field label="Email" v-model="email"></v-text-field>
+      <v-text-field label="Mot de passe" v-model="password" :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" :type="show ? 'text' : 'password'" @click:append="show = !show"></v-text-field>
     </div>
     <button @click="register">S'inscrire</button>
   </div>
@@ -16,6 +16,7 @@ import SignupService from '../services/SignupService'
 export default {
   data() {
     return {
+      show: false,
       firstName: '',
       lastName: '',
       email: '',
@@ -39,14 +40,14 @@ export default {
 <style scoped lang="scss">
 
 .signupFields {
-  background-color: blue;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px black;
     &--container {
       display: flex;
     flex-direction: column;
     width: 400px;
-    }
-    &--container input {
-      margin: 15px;
     }
 }
 

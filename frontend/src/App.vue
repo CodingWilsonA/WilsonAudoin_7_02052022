@@ -22,7 +22,7 @@
 }
 
 .homeLogo {
-  width: 350px;
+  width: 300px;
 }
 
 nav {
