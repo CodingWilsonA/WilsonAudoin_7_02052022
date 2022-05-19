@@ -4,6 +4,7 @@
       <v-text-field label="Prénom" v-model="firstName" :rules="[rules.required]"></v-text-field>
       <v-text-field label="Nom" v-model="lastName" :rules="[rules.required]"></v-text-field>
       <v-text-field type="email" label="Email" v-model="email" :rules="[rules.required, rules.email]"></v-text-field>
+      <p class="signupFields--container--emailError">{{ duplicateEmailMessage }}</p>
       <v-text-field 
         label="Mot de passe" 
         v-model="password"
@@ -26,6 +27,7 @@ export default {
     return {
       show: false,
       validEmail: false,
+      duplicateEmailMessage: '',
       rules: {
         required: value => !!value || 'Ce champs est requis.',
         min: v => v.length >= 8 || 'Le mot de passe doit être de 8 caractères minimum',
@@ -48,12 +50,19 @@ export default {
   },
   methods: {
     async register() {
-      await SignupService.register({
+      try {
+        await SignupService.register({
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
         password: this.password
       })
+      } catch (err){
+        if (err.response.data.message === 'Bad request : ER_DUP_ENTRY') {
+          this.duplicateEmailMessage = "Un compte est déjà enregistré avec cette adresse email. Veuillez en choisir une autre."
+        }
+        return console.error(err.response.data)
+      }
     }
   }
 }
@@ -67,10 +76,17 @@ export default {
   border: 1px solid black;
   border-radius: 20px;
   box-shadow: 0px 0px 10px black;
+  margin-bottom: 50px;
     &--container {
       display: flex;
-    flex-direction: column;
-    width: 400px;
+      flex-direction: column;
+      width: 400px;
+      &--emailError {
+        align-self: flex-start;
+        font-size: 11px;
+        font-weight: bold;
+        color: red;
+      }
     }
     &--button {
       padding: 5px;
