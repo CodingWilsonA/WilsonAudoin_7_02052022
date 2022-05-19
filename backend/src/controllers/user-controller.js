@@ -1,4 +1,8 @@
 const bcrypt = require("bcrypt");
+const session = require("express-session");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config({ path: "./src/env/default.env" });
 const db = require("../services/database");
 const userModel = require("../models/user-model");
 
@@ -19,4 +23,39 @@ const signup = async (req, res) => {
   );
 };
 
-module.exports = { signup };
+const login = (req, res) => {
+  const loginResponse = res;
+  const loginRequest = req;
+  userModel.email = loginRequest.body.email;
+  userModel.password = loginRequest.body.password;
+  if (userModel.email !== "" && userModel.password !== "") {
+    db.query(
+      "SELECT * FROM users WHERE email = ?",
+      [userModel.email],
+      function (err, result, fields) {
+        if (err) {
+          return loginResponse
+            .status(403)
+            .json({ message: "Wrong credentials." });
+        }
+        bcrypt.compare(userModel.password, result[0].password).then((valid) => {
+          if (!valid) {
+            return loginResponse
+              .status(403)
+              .json({ message: "Wrong credentials" });
+          }
+          return loginResponse.status(200).json({
+            userId: result[0].user_id,
+            token: jwt.sign(
+              { userId: result[0].user_id },
+              process.env.TOKEN_SALT,
+              { expiresIn: "4h" }
+            ),
+          });
+        });
+      }
+    );
+  }
+};
+
+module.exports = { signup, login };
