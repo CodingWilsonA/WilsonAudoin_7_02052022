@@ -38,21 +38,27 @@ const login = (req, res) => {
             .status(403)
             .json({ message: "Wrong credentials." });
         }
-        bcrypt.compare(userModel.password, result[0].password).then((valid) => {
-          if (!valid) {
-            return loginResponse
-              .status(403)
-              .json({ message: "Wrong credentials" });
-          }
-          return loginResponse.status(200).json({
-            userId: result[0].user_id,
-            token: jwt.sign(
-              { userId: result[0].user_id },
-              process.env.TOKEN_SALT,
-              { expiresIn: "4h" }
-            ),
-          });
-        });
+        if (result[0]) {
+          bcrypt
+            .compare(userModel.password, result[0].password)
+            .then((valid) => {
+              if (!valid) {
+                return loginResponse
+                  .status(403)
+                  .json({ message: "Wrong credentials" });
+              }
+              return loginResponse.status(200).json({
+                userId: result[0].user_id,
+                token: jwt.sign(
+                  { userId: result[0].user_id },
+                  process.env.TOKEN_SALT,
+                  { expiresIn: "4h" }
+                ),
+              });
+            });
+        } else {
+          return res.status(403).json({ message: "Wrong credentials" });
+        }
       }
     );
   }
