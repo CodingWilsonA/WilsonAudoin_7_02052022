@@ -23,15 +23,19 @@ export default {
   },
   methods : {
     async login() {
-      try {
-        await LoginService.login({
-          email: this.email,
-          password: this.password
-        })
-      }
-      catch (err) {
-        this.errorMessage = 'Ces identifiants ne correspondent à aucun utilisateur enregistré.'
-        return console.error(err.response.data)
+      if (this.email !== '' && this.password !== '') {
+        try {
+          await LoginService.login({
+            email: this.email,
+            password: this.password
+          })
+        }
+        catch (err) {
+          this.errorMessage = 'Ces identifiants ne correspondent à aucun utilisateur enregistré.'
+          return console.error(err.response.data)
+        }
+      } else {
+        this.errorMessage = 'Veuillez entrer une adresse email et un mot de passe.'
       }
     }
   }
