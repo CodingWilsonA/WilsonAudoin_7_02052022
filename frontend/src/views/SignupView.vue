@@ -61,6 +61,7 @@ export default {
       } catch (err){
         if (err.response.data.message === 'Bad request : ER_DUP_ENTRY') {
           this.duplicateEmailMessage = "Un compte est déjà enregistré avec cette adresse email. Veuillez en choisir une autre."
+          this.validEmail = false
         }
         return console.error(err.response.data)
       }
