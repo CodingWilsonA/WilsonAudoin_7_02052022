@@ -4,7 +4,7 @@
       <v-text-field label="Prénom" v-model="firstName" :rules="[rules.required]"></v-text-field>
       <v-text-field label="Nom" v-model="lastName" :rules="[rules.required]"></v-text-field>
       <v-text-field type="email" label="Email" v-model="email" :rules="[rules.required, rules.email]"></v-text-field>
-      <p class="signupFields--container--emailError">{{ duplicateEmailMessage }}</p>
+      <p class="signupFields--container__emailError">{{ duplicateEmailMessage }}</p>
       <v-text-field 
         label="Mot de passe" 
         v-model="password"
@@ -69,7 +69,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
 .signupFields {
@@ -79,10 +78,8 @@ export default {
   box-shadow: 0px 0px 10px black;
   margin-bottom: 50px;
     &--container {
-      display: flex;
-      flex-direction: column;
       width: 400px;
-      &--emailError {
+      &__emailError {
         align-self: flex-start;
         font-size: 11px;
         font-weight: bold;
@@ -100,6 +97,16 @@ export default {
         background-color: blue;
       }
     }
+}
+
+.error--text {
+  color: red;
+  &.theme--light.v-messages {
+    color: none;
+  }
+  &.theme--light.v-label {
+    color: none;
+  }
 }
 
 </style>
