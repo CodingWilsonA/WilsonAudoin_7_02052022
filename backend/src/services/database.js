@@ -1,6 +1,7 @@
 const mysql = require("mysql2");
 const config = require("../config/config");
 
+//TODO écrire un "petit" script et déplacer le modèle dans son propre dossier
 let createTableUsers = `CREATE TABLE IF NOT EXISTS users (
   user_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(50),
@@ -18,18 +19,22 @@ const db = mysql.createPool({
 
 db.getConnection(function (err, conn) {
   if (err) {
-    return console.error(err.message);
+    //TODO KILL PROCESS + regarder unhandled expressions dans node
+    console.error(err.message);
+    process.exit();
   }
   console.log("Successfully logged into database!");
 
   conn.query(createTableUsers, function (err) {
     if (err) {
-      return console.error(err.message);
+      console.error(err.message);
+      return;
     }
   });
   conn.release(function (err) {
     if (err) {
-      return console.error(err.message);
+      console.error(err.message);
+      return;
     }
   });
 });
