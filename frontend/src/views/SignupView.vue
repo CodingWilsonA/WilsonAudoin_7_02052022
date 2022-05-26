@@ -4,7 +4,7 @@
       <v-text-field label="Prénom" v-model="firstName" :rules="[rules.required]"></v-text-field>
       <v-text-field label="Nom" v-model="lastName" :rules="[rules.required]"></v-text-field>
       <v-text-field type="email" label="Email" v-model="email" :rules="[rules.required, rules.email]"></v-text-field>
-      <p class="signupFields--container__emailError">{{ duplicateEmailMessage }}</p>
+      <p v-if='this.duplicateEmailMessage !== ""' class="signupFields--container__emailError">{{ duplicateEmailMessage }}</p>
       <v-text-field 
         label="Mot de passe" 
         v-model="password"
@@ -60,7 +60,7 @@ export default {
       })
       } catch (err){
         if (err.response.data.message === 'Bad request : ER_DUP_ENTRY') {
-          this.duplicateEmailMessage = "Un compte est déjà enregistré avec cette adresse email. Veuillez en choisir une autre."
+          this.duplicateEmailMessage = "Un compte est déjà enregistré avec cette adresse email."
           this.validEmail = false
         }
         return console.error(err.response.data)
@@ -74,9 +74,8 @@ export default {
 
 .signupFields {
   padding: 10px;
-  border: 1px solid black;
   border-radius: 20px;
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 0px 0px 10px #4E5166;
   margin-bottom: 50px;
     &--container {
       width: 400px;
@@ -91,13 +90,15 @@ export default {
       width: 100%;
       font-weight: bold;
       padding: 5px;
+      margin-top: 15px;
       border-radius: 5px;
-      color: white;
       &__invalid {
-        background-color: grey;
+        background-color: #FD2D01;
+        color: #FFD7D7;
       }
       &__valid {
-        background-color: blue;
+        background-color: #FFD7D7;
+        color: #FD2D01;
       }
     }
 }

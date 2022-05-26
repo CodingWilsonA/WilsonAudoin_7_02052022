@@ -49,9 +49,8 @@ export default {
 
 .loginFields {
   padding: 10px;
-  border: 1px solid black;
   border-radius: 20px;
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 0px 0px 10px #4E5166;
     &--container {
       display: flex;
     flex-direction: column;
@@ -69,8 +68,8 @@ export default {
       font-weight: bold;
       padding: 5px;
       border-radius: 5px;
-      color: white;
-      background-color: blue;
+      color: #FD2D01;
+      background-color: #FFD7D7;
     }
 }
 
