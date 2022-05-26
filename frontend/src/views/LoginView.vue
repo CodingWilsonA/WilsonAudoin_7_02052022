@@ -1,8 +1,8 @@
 <template>
     <div class="loginFields">
         <div class='loginFields--container'>
-            <v-text-field label="Email" v-model="email"></v-text-field>
-            <v-text-field label="Mot de passe" v-model="password" :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" :type="show ? 'text' : 'password'" @click:append="show = !show"></v-text-field>
+            <v-text-field label="Email" v-model="email" :rules='[rules.required]'></v-text-field>
+            <v-text-field label="Mot de passe" v-model="password" :rules='[rules.required]' :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" :type="show ? 'text' : 'password'" @click:append="show = !show"></v-text-field>
         </div>
         <p class="loginFields--errorMessage">{{ errorMessage }}</p>
         <button class="loginFields--button" @click='login'>Se connecter</button>
@@ -15,6 +15,9 @@ import LoginService from '../services/LoginService'
 export default {
   data() {
     return {
+      rules: {
+        required: value => !!value || 'Ce champs est requis.',
+      },
       errorMessage: '',
       show: false,
       email: '',
@@ -59,8 +62,11 @@ export default {
       font-weight: bold;
       color: red;
       margin-bottom: 15px;
+      text-align: left;
     }
     &--button {
+      width: 100%;
+      font-weight: bold;
       padding: 5px;
       border-radius: 5px;
       color: white;
