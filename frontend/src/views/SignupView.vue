@@ -81,13 +81,15 @@ export default {
     &--container {
       width: 400px;
       &__emailError {
-        align-self: flex-start;
+        text-align: left;
         font-size: 11px;
         font-weight: bold;
         color: red;
       }
     }
     &--button {
+      width: 100%;
+      font-weight: bold;
       padding: 5px;
       border-radius: 5px;
       color: white;
@@ -98,16 +100,6 @@ export default {
         background-color: blue;
       }
     }
-}
-
-.error--text {
-  color: red;
-  &.theme--light.v-messages {
-    color: none;
-  }
-  &.theme--light.v-label {
-    color: none;
-  }
 }
 
 </style>
