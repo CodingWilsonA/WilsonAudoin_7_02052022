@@ -1,8 +1,7 @@
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-dotenv.config({ path: "./src/env/default.env" });
+const config = require("../config/config");
 const db = require("../services/database");
 const userModel = require("../models/user-model");
 
@@ -32,7 +31,7 @@ const login = (req, res) => {
     db.query(
       "SELECT * FROM users WHERE email = ?",
       [userModel.email],
-      function (err, result, fields) {
+      function (err, result) {
         if (err) {
           return loginResponse
             .status(403)
@@ -49,11 +48,9 @@ const login = (req, res) => {
               }
               return loginResponse.status(200).json({
                 userId: result[0].user_id,
-                token: jwt.sign(
-                  { userId: result[0].user_id },
-                  process.env.TOKEN_SALT,
-                  { expiresIn: "4h" }
-                ),
+                token: jwt.sign({ userId: result[0].user_id }, config.jwtSalt, {
+                  expiresIn: "4h",
+                }),
               });
             });
         } else {
