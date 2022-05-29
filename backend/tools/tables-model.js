@@ -10,7 +10,7 @@ let usersTable = `CREATE TABLE IF NOT EXISTS users (
 
 let authsTable = `CREATE TABLE IF NOT EXISTS auths (
   auth_id INT NOT NULL AUTO_INCREMENT,
-	auth_lvl INT NOT NULL,
+	auth_lvl INT NOT NULL UNIQUE,
 	auth_label varchar(50) NOT NULL,
 	PRIMARY KEY (auth_id)
 );`;
