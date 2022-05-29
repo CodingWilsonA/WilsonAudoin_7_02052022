@@ -6,7 +6,7 @@ const {
   usersLikesTable,
 } = require("./tables-model");
 
-const alterTableUsers = `ALTER TABLE users ADD CONSTRAINT users_fk0 FOREIGN KEY (auth_id) REFERENCES auths(auth_id);`;
+const alterTableUsers = `ALTER TABLE users ADD CONSTRAINT users_fk0 FOREIGN KEY (auth_lvl) REFERENCES auths(auth_lvl);`;
 const alterTablePosts = `ALTER TABLE posts ADD CONSTRAINT posts_fk0 FOREIGN KEY (author_id) REFERENCES users(user_id);`;
 const alterUsersLikesUsers = `ALTER TABLE users_likes ADD CONSTRAINT users_likes_fk0 FOREIGN KEY (user_id) REFERENCES users(user_id);`;
 const alterUsersLikesPosts = `ALTER TABLE users_likes ADD CONSTRAINT users_likes_fk1 FOREIGN KEY (post_id) REFERENCES posts(post_id);`;

@@ -4,7 +4,7 @@ let usersTable = `CREATE TABLE IF NOT EXISTS users (
 	last_name varchar(50),
 	email varchar(255) NOT NULL UNIQUE,
 	password varchar(255) NOT NULL,
-	auth_id INT NOT NULL DEFAULT '1',
+	auth_lvl INT NOT NULL DEFAULT '0',
 	PRIMARY KEY (user_id)
   );`;
 
