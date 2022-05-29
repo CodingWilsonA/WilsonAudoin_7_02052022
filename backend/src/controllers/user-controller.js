@@ -6,58 +6,65 @@ const db = require("../services/database");
 const userModel = require("../models/user-model");
 
 const signup = async (req, res) => {
-  userModel.firstName = req.body.firstName;
-  userModel.lastName = req.body.lastName;
-  userModel.email = req.body.email;
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  db.query(
-    "INSERT INTO users (first_name, last_name, email, password) VALUES (?,?,?,?)",
-    [userModel.firstName, userModel.lastName, userModel.email, hashedPassword],
-    function (err) {
-      if (err) {
-        return res.status(400).json({ message: `Bad request : ${err.code}` });
+  try {
+    const user = await userModel.validateAsync({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: hashedPassword,
+    });
+    db.query(
+      "INSERT INTO users (first_name, last_name, email, password) VALUES (?,?,?,?)",
+      [user.firstName, user.lastName, user.email, user.password],
+      function (err) {
+        if (err) {
+          return res
+            .status(400)
+            .json({ message: `Bad request : ${err.message}` });
+        }
+        return res.status(201).json({ message: "User sucessfully created" });
       }
-      return res.status(201).json({ message: "User sucessfully created" });
-    }
-  );
+    );
+  } catch (err) {
+    return res.status(400).json({ message: `Bad request : ${err.message}` });
+  }
 };
 
-const login = (req, res) => {
-  const loginResponse = res;
-  const loginRequest = req;
-  userModel.email = loginRequest.body.email;
-  userModel.password = loginRequest.body.password;
-  if (userModel.email !== "" && userModel.password !== "") {
-    db.query(
-      "SELECT * FROM users WHERE email = ?",
-      [userModel.email],
-      function (err, result) {
-        if (err) {
-          return loginResponse
-            .status(403)
-            .json({ message: "Wrong credentials." });
-        }
-        if (result[0]) {
-          bcrypt
-            .compare(userModel.password, result[0].password)
-            .then((valid) => {
+const login = async (req, res) => {
+  if (req.body.email !== "" && req.body.password !== "") {
+    try {
+      const user = await userModel.validateAsync({
+        email: req.body.email,
+        password: req.body.password,
+      });
+      db.query(
+        "SELECT * FROM users WHERE email = ?",
+        [user.email],
+        function (err, dbUser) {
+          if (err) {
+            return res.status(403).json({ message: "Wrong credentials" });
+          }
+          if (dbUser[0]) {
+            bcrypt.compare(user.password, dbUser[0].password).then((valid) => {
               if (!valid) {
-                return loginResponse
-                  .status(403)
-                  .json({ message: "Wrong credentials" });
+                return res.status(403).json({ message: "Wrong credentials" });
               }
-              return loginResponse.status(200).json({
-                userId: result[0].user_id,
-                token: jwt.sign({ userId: result[0].user_id }, config.jwtSalt, {
+              return res.status(200).json({
+                userId: dbUser[0].user_id,
+                token: jwt.sign({ userId: dbUser[0].user_id }, config.jwtSalt, {
                   expiresIn: "4h",
                 }),
               });
             });
-        } else {
-          return res.status(403).json({ message: "Wrong credentials" });
+          } else {
+            return res.status(403).json({ message: "Wrong credentials" });
+          }
         }
-      }
-    );
+      );
+    } catch (err) {
+      return res.status(400).json({ message: `Bad request : ${err.message}` });
+    }
   }
 };
 
