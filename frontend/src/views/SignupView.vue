@@ -79,6 +79,9 @@ export default {
   margin-bottom: 50px;
     &--container {
       width: 400px;
+      @media screen and (max-width: 424px) {
+      width: 280px;
+  }
       &__emailError {
         text-align: left;
         font-size: 11px;

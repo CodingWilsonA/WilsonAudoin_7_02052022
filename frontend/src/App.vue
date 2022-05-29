@@ -27,6 +27,13 @@
   flex-direction: column;
   align-items: center;
 
+  @media screen and (max-width: 424px) {
+    .v-main__wrap {
+      width: 300px;
+    }
+  }
+
+
   & .homeLogo {
   width: 300px;
   }

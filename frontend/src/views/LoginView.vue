@@ -53,8 +53,11 @@ export default {
   box-shadow: 0px 0px 10px #4E5166;
     &--container {
       display: flex;
-    flex-direction: column;
-    width: 400px;
+      flex-direction: column;
+      width: 400px;
+      @media screen and (max-width: 424px) {
+          width: 280px;
+      }
     }
     &--errorMessage {
       font-size: 11px;
