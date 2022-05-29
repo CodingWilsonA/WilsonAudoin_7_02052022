@@ -54,6 +54,40 @@ db.getConnection(function (err, conn) {
     });
   });
 
+  const createDefaultUserAuthPromise = new Promise((resolve) => {
+    conn.query(createDefaultUserAuth, function (err) {
+      if (err) {
+        console.error(err.message);
+      }
+      resolve();
+    });
+  });
+  createDefaultUserAuthPromise.then(() => {
+    conn.release(function (err) {
+      if (err) {
+        console.error(err.message);
+        return;
+      }
+    });
+  });
+
+  const createAdminUserAuthPromise = new Promise((resolve) => {
+    conn.query(createAdminUserAuth, function (err) {
+      if (err) {
+        console.error(err.message);
+      }
+      resolve();
+    });
+  });
+  createAdminUserAuthPromise.then(() => {
+    conn.release(function (err) {
+      if (err) {
+        console.error(err.message);
+        return;
+      }
+    });
+  });
+
   const postsTableSeedPromise = new Promise((resolve) => {
     conn.query(postsTable, function (err) {
       if (err) {
@@ -148,40 +182,6 @@ db.getConnection(function (err, conn) {
     });
   });
   alterUsersLikesPostsPromise.then(() => {
-    conn.release(function (err) {
-      if (err) {
-        console.error(err.message);
-        return;
-      }
-    });
-  });
-
-  const createDefaultUserAuthPromise = new Promise((resolve) => {
-    conn.query(createDefaultUserAuth, function (err) {
-      if (err) {
-        console.error(err.message);
-      }
-      resolve();
-    });
-  });
-  createDefaultUserAuthPromise.then(() => {
-    conn.release(function (err) {
-      if (err) {
-        console.error(err.message);
-        return;
-      }
-    });
-  });
-
-  const createAdminUserAuthPromise = new Promise((resolve) => {
-    conn.query(createAdminUserAuth, function (err) {
-      if (err) {
-        console.error(err.message);
-      }
-      resolve();
-    });
-  });
-  createAdminUserAuthPromise.then(() => {
     conn.release(function (err) {
       if (err) {
         console.error(err.message);
