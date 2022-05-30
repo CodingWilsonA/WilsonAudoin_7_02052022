@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import LoginService from '../services/LoginService'
+import loginService from '../services/LoginService'
 
 export default {
   data() {
@@ -28,10 +28,13 @@ export default {
     async login() {
       if (this.email !== '' && this.password !== '') {
         try {
-          await LoginService.login({
+          const loginServiceResponse = await loginService.login({
             email: this.email,
             password: this.password
           })
+          console.log(loginServiceResponse)
+          this.$store.dispatch('storeToken', loginServiceResponse.data.token)
+          this.$store.dispatch('storeUserId', loginServiceResponse.data.userId)
         }
         catch (err) {
           this.errorMessage = 'Ces identifiants ne correspondent à aucun utilisateur enregistré.'
