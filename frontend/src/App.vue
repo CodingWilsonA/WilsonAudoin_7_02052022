@@ -2,11 +2,11 @@
   <div id="app">
     <v-app>
       <v-main>
-        <img class="homeLogo" alt="Groupomania logo" src="./assets/icon.svg">
-        <nav>
+        <img v-if="!$store.state.userLoggedIn" class="homeLogo" alt="Groupomania logo" src="./assets/icon.svg">
+        <nav v-if="!$store.state.userLoggedIn">
           <router-link to="/">Se connecter</router-link>
           <v-spacer></v-spacer>
-          <router-link to="/signup">S'inscrire</router-link>
+          <router-link to="/inscription">S'inscrire</router-link>
         </nav>
         <router-view/>
       </v-main>
@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap');
 

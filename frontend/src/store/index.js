@@ -8,10 +8,16 @@ export default new Vuex.Store({
   state: {
     token: "",
     userId: "",
+    userLoggedIn: false,
   },
   mutations: {
     setStateToken(state, token) {
       state.token = token;
+      if (token) {
+        state.userLoggedIn = true;
+      } else {
+        state.userLoggedIn = false;
+      }
     },
     setStateUserId(state, userId) {
       state.userId = userId;
