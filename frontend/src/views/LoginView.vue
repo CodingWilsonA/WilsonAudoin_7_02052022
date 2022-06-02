@@ -4,7 +4,7 @@
             <v-text-field label="Email" v-model="email" :rules='[rules.required]'></v-text-field>
             <v-text-field label="Mot de passe" v-model="password" :rules='[rules.required]' :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" :type="show ? 'text' : 'password'" @click:append="show = !show"></v-text-field>
         </div>
-        <p class="loginFields--errorMessage">{{ errorMessage }}</p>
+        <p v-if="errorMessage !== ''" class="loginFields--errorMessage">{{ errorMessage }}</p>
         <button class="loginFields--button" @click='login'>Se connecter</button>
     </div>
 </template>
@@ -32,9 +32,11 @@ export default {
             email: this.email,
             password: this.password
           })
-          console.log(loginServiceResponse)
           this.$store.dispatch('storeToken', loginServiceResponse.data.token)
           this.$store.dispatch('storeUserId', loginServiceResponse.data.userId)
+          this.$router.push({
+            name: 'main'
+          })
         }
         catch (err) {
           this.errorMessage = 'Ces identifiants ne correspondent à aucun utilisateur enregistré.'
@@ -76,6 +78,7 @@ export default {
       border-radius: 5px;
       color: #FD2D01;
       background-color: #FFD7D7;
+      margin-top: 15px;
     }
 }
 
