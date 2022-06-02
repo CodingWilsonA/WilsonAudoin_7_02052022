@@ -1,22 +1,27 @@
 <template>
-  <div id="main">
+  <div class="main">
     <v-toolbar>
-      <v-toolbar-title>
+      <h1>
         Groupomania
-      </v-toolbar-title>
+      </h1>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn @click='logout'>
+        <button @click='logout'>
           Déconnexion
-        </v-btn>
+        </button>
       </v-toolbar-items>
     </v-toolbar>
+    <create-post />
   </div>
 </template>
 
 <script>
+import CreatePost from '../components/CreatePost.vue'
 
 export default {
+  components: { 
+    CreatePost 
+  },
   methods: {
     logout() {
       this.$store.dispatch('storeToken', null)
@@ -35,8 +40,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#main {
+.main {
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  color: #FD2D01;
+  & h1 {
+    color: #FD2D01;
+  }
+  & button {
+    padding: 5px;
+    font-weight: bold;
+    color: #FD2D01; 
+    background-color: #FFD7D7;
+    opacity: 0.8;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 
 
