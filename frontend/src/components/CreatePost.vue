@@ -26,7 +26,7 @@ export default {
       try {
         await postsService.createPost({
         content: this.postText,
-        author: this.$store.state.userId,
+        authorId: this.$store.state.userId,
       })
       } catch (err) {
         this.errorMessage = 'Oups ! votre post n\'a pas pu être créé. Veuillez réessayer ultérieurement.'
