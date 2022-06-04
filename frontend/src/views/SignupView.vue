@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     async register() {
+      this.validEmail = false
       try {
         await SignupService.register({
         firstName: this.firstName,
@@ -59,9 +60,8 @@ export default {
         password: this.password
       })
       } catch (err){
-        if (err.response.data.message === 'Bad request : ER_DUP_ENTRY') {
+        if (err.response.data.message.includes('Duplicate')) {
           this.duplicateEmailMessage = "Un compte est déjà enregistré avec cette adresse email."
-          this.validEmail = false
         }
         return console.error(err.response.data)
       }
