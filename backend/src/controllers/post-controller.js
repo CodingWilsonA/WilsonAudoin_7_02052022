@@ -1,6 +1,19 @@
 const db = require("../services/database");
 const postModel = require("../models/post-model");
 
+const getAllPosts = () => {
+  try {
+    db.query("SELECT * from posts;", function (err, postsArray) {
+      if (err) {
+        return res.status(404).json({ message: err.message });
+      }
+      return res.status(200).json(postsArray);
+    });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 const createPost = async (req, res) => {
   try {
     const post = await postModel.validateAsync({
@@ -24,4 +37,4 @@ const createPost = async (req, res) => {
   }
 };
 
-module.exports = { createPost };
+module.exports = { getAllPosts, createPost };
