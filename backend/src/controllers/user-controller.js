@@ -52,6 +52,7 @@ const login = async (req, res) => {
               }
               return res.status(200).json({
                 userId: dbUser[0].user_id,
+                userAuthLvl: dbUser[0].auth_lvl,
                 token: jwt.sign({ userId: dbUser[0].user_id }, config.jwtSalt, {
                   expiresIn: "4h",
                 }),

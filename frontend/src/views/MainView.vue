@@ -26,6 +26,7 @@ export default {
     logout() {
       this.$store.dispatch('storeToken', null)
       this.$store.dispatch('storeUserId', null)
+      this.$store.dispatch('storeUserAuthLvl', null)
       this.$router.push({
         name: 'login'
       })
