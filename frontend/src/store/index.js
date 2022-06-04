@@ -7,7 +7,8 @@ export default new Vuex.Store({
   strict: process.env.NODE_ENV !== "production",
   state: {
     token: "",
-    userId: "",
+    userId: null,
+    userAuthLvl: null,
     userLoggedIn: false,
   },
   mutations: {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     setStateUserId(state, userId) {
       state.userId = userId;
     },
+    setStateUserAuthLvl(state, userAuthLvl) {
+      state.userAuthLvl = userAuthLvl;
+    },
   },
   actions: {
     storeToken({ commit }, token) {
@@ -29,6 +33,9 @@ export default new Vuex.Store({
     },
     storeUserId({ commit }, userId) {
       commit("setStateUserId", userId);
+    },
+    storeUserAuthLvl({ commit }, userAuthLvl) {
+      commit("setStateUserAuthLvl", userAuthLvl);
     },
   },
 });

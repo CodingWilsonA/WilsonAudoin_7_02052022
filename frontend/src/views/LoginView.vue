@@ -34,6 +34,7 @@ export default {
           })
           this.$store.dispatch('storeToken', loginServiceResponse.data.token)
           this.$store.dispatch('storeUserId', loginServiceResponse.data.userId)
+          this.$store.dispatch('storeUserAuthLvl', loginServiceResponse.data.userAuthLvl)
           this.$router.push({
             name: 'main'
           })
