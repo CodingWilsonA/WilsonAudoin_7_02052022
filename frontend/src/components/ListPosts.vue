@@ -1,13 +1,18 @@
 <template>
-    <li class="post" :data-authorId="authorId" :data-postId="postId">
+    <li class="post">
         <p>
             {{ content }}
         </p>
-        <img :src="imgUrl">
+        <img v-if="imgUrl !== null" :src="imgUrl">
         <div>
             <p>Likes: {{ likes }}</p>
         </div>
-        <p>Créé le : {{ creationDate }}</p>
+        <p>Créé le : {{ this.formatDate(creationDate) }}</p>
+        <p v-if="updateDate !== null">Modifié le: {{ this.formatDate(updateDate) }}</p>
+        <div v-if="authorId === this.$store.state.userId || this.$store.state.userAuthLvl === 1" class="post--buttons">
+            <button>Modifier ce post</button>
+            <button>Supprimer ce post</button>
+        </div>
     </li>
 </template>
 
@@ -21,6 +26,13 @@ export default {
         updateDate: String,
         authorId: Number,
         postId: Number
+    },
+    methods: {
+        formatDate(givenTimeStamp) {
+            const dateArray = givenTimeStamp.split(/[-:T.]/)
+            const formattedDate = `${dateArray[2]}/${dateArray[1]}/${dateArray[0]} à ${dateArray[3]}:${dateArray[4]}`
+            return formattedDate
+        }
     }
 }
 
@@ -35,5 +47,16 @@ export default {
     border: 1px solid black;
     border-radius: 20px;;
     background-color: #FFD7D7;
+    &--buttons {
+        display: flex;
+        flex-direction: column;
+        & button {
+            align-self: center;
+            width: 50%;
+            border: 1px solid black;
+            border-radius: 10px;
+            margin: 5px 0;
+        }
+    }
 }
 </style>
