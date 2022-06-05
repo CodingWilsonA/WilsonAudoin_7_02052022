@@ -1,7 +1,7 @@
 const db = require("../services/database");
 const postModel = require("../models/post-model");
 
-const getAllPosts = () => {
+const getAllPosts = (req, res) => {
   try {
     db.query("SELECT * from posts;", function (err, postsArray) {
       if (err) {
