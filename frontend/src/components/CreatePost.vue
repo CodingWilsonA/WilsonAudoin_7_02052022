@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import postsService from '../services/PostsService'
+import PostsService from '../services/PostsService'
 
 export default {
     data() {
@@ -24,15 +24,20 @@ export default {
     methods: {
     async createPost() {
       try {
-        await postsService.createPost({
+        await PostsService.createPost({
         content: this.postText,
         authorId: this.$store.state.userId,
-      })
+        })
+        this.updatePostsList()
+        this.postText = ''
       } catch (err) {
         this.errorMessage = 'Oups ! votre post n\'a pas pu être créé. Veuillez réessayer ultérieurement.'
         this.postText = ''
         console.error(err.response.data)
         }
+      },
+      updatePostsList() {
+          this.$emit("update-posts-list")
       }
     }
 }

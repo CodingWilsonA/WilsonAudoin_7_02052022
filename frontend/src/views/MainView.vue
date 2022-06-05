@@ -11,7 +11,7 @@
         </button>
       </v-toolbar-items>
     </v-toolbar>
-    <create-post />
+    <create-post @update-posts-list="getAllPosts" />
     <ul class="main--postList">
       <list-posts 
         v-for="post in postsArray"
@@ -55,7 +55,6 @@ export default {
       try {
         const postsServiceResponse = await PostsService.getAllPosts()
         this.postsArray = postsServiceResponse.data
-        console.log(this.postsArray)
       } catch (err){
         console.error(err.message)
         return
