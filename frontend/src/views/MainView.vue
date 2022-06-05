@@ -17,6 +17,7 @@
 
 <script>
 import CreatePost from '../components/CreatePost.vue'
+import PostsService from '../services/PostsService.js'
 
 export default {
   components: { 
@@ -30,11 +31,22 @@ export default {
         name: 'login'
       })
     },
+    async getAllPosts() {
+      try {
+        const postsServiceResponse = await PostsService.getAllPosts()
+        const postsArray = postsServiceResponse.data
+        console.log(postsArray)
+      } catch (err){
+        console.error(err.message)
+        return
+      }
+    }
   },
   beforeMount() {
     if (!this.$store.state.userLoggedIn) {
       this.logout()
     }
+    this.getAllPosts()
   }
 }
 </script>
