@@ -12,16 +12,36 @@
       </v-toolbar-items>
     </v-toolbar>
     <create-post />
+    <ul class="main--postList">
+      <list-posts 
+        v-for="post in postsArray"
+        :key="post.post_id"
+        :content="post.content"
+        :imgUrl="post.img_url"
+        :likes="post.likes"
+        :creationDate="post.created_at"
+        :updateDate="post.updated_at"
+        :authorId="post.author_id"
+        :postId="post.post_id"
+      />
+    </ul>
   </div>
 </template>
 
 <script>
 import CreatePost from '../components/CreatePost.vue'
+import ListPosts from '../components/ListPosts.vue'
 import PostsService from '../services/PostsService.js'
 
 export default {
+  data() {
+    return {
+      postsArray: []
+    }
+  },
   components: { 
-    CreatePost 
+    CreatePost,
+    ListPosts 
   },
   methods: {
     logout() {
@@ -34,8 +54,8 @@ export default {
     async getAllPosts() {
       try {
         const postsServiceResponse = await PostsService.getAllPosts()
-        const postsArray = postsServiceResponse.data
-        console.log(postsArray)
+        this.postsArray = postsServiceResponse.data
+        console.log(this.postsArray)
       } catch (err){
         console.error(err.message)
         return
@@ -69,6 +89,10 @@ export default {
     &:hover {
       opacity: 1;
     }
+  }
+  &--postList {
+    margin-top: 30px;
+    align-self: center;
   }
 }
 

@@ -3,12 +3,15 @@ const postModel = require("../models/post-model");
 
 const getAllPosts = (req, res) => {
   try {
-    db.query("SELECT * from posts;", function (err, postsArray) {
-      if (err) {
-        return res.status(404).json({ message: err.message });
+    db.query(
+      "SELECT * from posts ORDER BY created_at DESC;",
+      function (err, postsArray) {
+        if (err) {
+          return res.status(404).json({ message: err.message });
+        }
+        return res.status(200).json(postsArray);
       }
-      return res.status(200).json(postsArray);
-    });
+    );
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
