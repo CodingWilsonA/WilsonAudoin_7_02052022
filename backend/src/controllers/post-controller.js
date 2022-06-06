@@ -4,7 +4,9 @@ const postModel = require("../models/post-model");
 const getAllPosts = (req, res) => {
   try {
     db.query(
-      "SELECT * from posts ORDER BY created_at DESC;",
+      `SELECT users.first_name, users.last_name, posts.* FROM users
+       JOIN posts
+       ON users.user_id = posts.author_id ORDER BY created_at DESC;`,
       function (err, postsArray) {
         if (err) {
           return res.status(404).json({ message: err.message });

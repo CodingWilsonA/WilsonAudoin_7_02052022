@@ -23,6 +23,8 @@
         :updateDate="post.updated_at"
         :authorId="post.author_id"
         :postId="post.post_id"
+        :authorFirstName="post.first_name"
+        :authorLastName="post.last_name"
       />
     </ul>
   </div>
