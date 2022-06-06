@@ -11,12 +11,14 @@
         <p v-if="updateDate !== null">Modifié le: {{ this.formatDate(updateDate) }}</p>
         <div v-if="authorId === this.$store.state.userId || this.$store.state.userAuthLvl === 1" class="post--buttons">
             <button>Modifier ce post</button>
-            <button>Supprimer ce post</button>
+            <button @click="deletePost">Supprimer ce post</button>
         </div>
     </li>
 </template>
 
 <script>
+import PostsService from '../services/PostsService.js'
+
 export default {
     props: {
         content: String,
@@ -34,6 +36,19 @@ export default {
             const dateArray = givenTimeStamp.split(/[-:T.]/)
             const formattedDate = `${dateArray[2]}/${dateArray[1]}/${dateArray[0]} à ${dateArray[3]}:${dateArray[4]}`
             return formattedDate
+        },
+        async deletePost() {
+            try {
+                    await PostsService.deletePost({
+                        postIdToDelete: this.postId
+                    })
+                    this.updatePostsList()
+            } catch (err) {
+                console.error(err.message)
+            }
+        },
+        updatePostsList() {
+          this.$emit("update-posts-list")
         }
     }
 }

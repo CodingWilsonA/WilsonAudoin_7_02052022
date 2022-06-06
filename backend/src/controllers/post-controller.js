@@ -34,7 +34,7 @@ const createPost = async (req, res) => {
             .status(400)
             .json({ message: `Bad request : ${err.message}` });
         }
-        return res.status(201).json({ message: "Post sucessfully created" });
+        return res.status(201).json({ message: "Post successfully created" });
       }
     );
   } catch (err) {
@@ -42,4 +42,21 @@ const createPost = async (req, res) => {
   }
 };
 
-module.exports = { getAllPosts, createPost };
+const deletePost = (req, res) => {
+  try {
+    db.query(
+      "DELETE FROM posts WHERE post_id = ?",
+      [req.body.params.postIdToDelete],
+      function (err) {
+        if (err) {
+          return res.status(400).json({ message: err.message });
+        }
+        return res.status(200).json({ message: "Post successfully deleted" });
+      }
+    );
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { getAllPosts, createPost, deletePost };

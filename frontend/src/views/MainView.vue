@@ -25,6 +25,7 @@
         :postId="post.post_id"
         :authorFirstName="post.first_name"
         :authorLastName="post.last_name"
+        @update-posts-list="getAllPosts"
       />
     </ul>
   </div>
@@ -95,6 +96,7 @@ export default {
   &--postList {
     margin-top: 30px;
     align-self: center;
+    padding-left: 0;
   }
 }
 
