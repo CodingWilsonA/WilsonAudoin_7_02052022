@@ -10,7 +10,7 @@
         <p>Créé le : {{ this.formatDate(creationDate) }} par {{ authorFirstName }} {{ authorLastName }}</p>
         <p v-if="updateDate !== null">Modifié le: {{ this.formatDate(updateDate) }}</p>
         <div v-if="authorId === this.$store.state.userId || this.$store.state.userAuthLvl === 1" class="post--buttons">
-            <button>Modifier ce post</button>
+            <modify-post />
             <button @click="confirmPostDeletion">Supprimer ce post</button>
             <div v-if="displayConfirmDeletion !== false" class="post--buttons--confirmDeletion">
                 <p>Êtes-vous sûr de vouloir supprimer ce post ?</p>
@@ -23,8 +23,12 @@
 
 <script>
 import PostsService from '../services/PostsService.js'
+import ModifyPost from '../components/ModifyPost.vue'
 
 export default {
+    components: { 
+        ModifyPost 
+    },
     data() {
         return {
             displayConfirmDeletion: false
