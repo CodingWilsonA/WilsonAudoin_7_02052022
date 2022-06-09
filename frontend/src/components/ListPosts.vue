@@ -4,9 +4,9 @@
             {{ content }}
         </p>
         <img v-if="imgUrl !== null" :src="imgUrl">
-        <div>
-            <p>Likes: {{ likes }}</p>
-        </div>
+        <add-like 
+            :postLikes="this.likes"
+        />
         <p>Créé le : {{ this.formatDate(creationDate) }} par {{ authorFirstName }} {{ authorLastName }}</p>
         <p v-if="updateDate !== null">Modifié le: {{ this.formatDate(updateDate) }}</p>
         <div v-if="authorId === this.$store.state.userId || this.$store.state.userAuthLvl === 1">
@@ -23,13 +23,15 @@
 </template>
 
 <script>
-import ModifyPost from '../components/ModifyPost.vue'
-import DeletePost from '../components/DeletePost.vue'
+import ModifyPost from './ModifyPost.vue'
+import DeletePost from './DeletePost.vue'
+import AddLike from './AddLike.vue'
 
 export default {
     components: { 
         ModifyPost,
-        DeletePost
+        DeletePost,
+        AddLike
     },
     props: {
         content: String,
