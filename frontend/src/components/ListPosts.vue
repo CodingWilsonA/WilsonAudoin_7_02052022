@@ -11,12 +11,12 @@
         <p v-if="updateDate !== null">Modifié le: {{ this.formatDate(updateDate) }}</p>
         <div v-if="authorId === this.$store.state.userId || this.$store.state.userAuthLvl === 1">
             <modify-post 
-            @update-posts-list="updatePostsList"
-            :postToModify="this.postId"
+                @update-posts-list="updatePostsList"
+                :postToModify="this.postId"
             />
             <delete-post 
-            @update-posts-list="updatePostsList"
-            :postToDelete="this.postId"
+                @update-posts-list="updatePostsList"
+                :postToDelete="this.postId"
             />
         </div>
     </li>
@@ -30,11 +30,6 @@ export default {
     components: { 
         ModifyPost,
         DeletePost
-    },
-    data() {
-        return {
-            displayConfirmDeletion: false
-        }
     },
     props: {
         content: String,

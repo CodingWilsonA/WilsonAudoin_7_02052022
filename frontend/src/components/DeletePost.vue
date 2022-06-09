@@ -58,6 +58,10 @@ export default {
             margin-top: 20px;
             width: 50%;
             align-self: center;
+            & button {
+                width: 40%;
+                margin: 5px;
+            }
         }
     }
 </style>
