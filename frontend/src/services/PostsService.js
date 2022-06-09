@@ -10,8 +10,8 @@ export default {
   updatePost(postDataToUpdate) {
     return Api().put("api/posts", postDataToUpdate);
   },
-  updateLikes() {
-    return Api().put("api/posts/likes");
+  updateLikes(likedPostId) {
+    return Api().put("api/posts/likes", likedPostId);
   },
   deletePost(params) {
     return Api().delete("api/posts", { data: { params } });
