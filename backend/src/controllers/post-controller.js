@@ -51,7 +51,7 @@ const deletePost = (req, res) => {
         if (err) {
           return res.status(400).json({ message: err.message });
         }
-        return res.status(200).json({ message: "Post successfully deleted" });
+        return res.status(204).json({ message: "Post successfully deleted" });
       }
     );
   } catch (err) {
