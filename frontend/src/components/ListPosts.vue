@@ -11,7 +11,12 @@
         <p v-if="updateDate !== null">Modifié le: {{ this.formatDate(updateDate) }}</p>
         <div v-if="authorId === this.$store.state.userId || this.$store.state.userAuthLvl === 1" class="post--buttons">
             <button>Modifier ce post</button>
-            <button @click="deletePost">Supprimer ce post</button>
+            <button @click="confirmPostDeletion">Supprimer ce post</button>
+            <div v-if="displayConfirmDeletion !== false" class="post--buttons--confirmDeletion">
+                <p>Êtes-vous sûr de vouloir supprimer ce post ?</p>
+                <button @click="deletePost">Oui</button>
+                <button @click="confirmPostDeletion">Non</button>
+            </div>
         </div>
     </li>
 </template>
@@ -20,6 +25,11 @@
 import PostsService from '../services/PostsService.js'
 
 export default {
+    data() {
+        return {
+            displayConfirmDeletion: false
+        }
+    },
     props: {
         content: String,
         imgUrl: String,
@@ -49,6 +59,13 @@ export default {
         },
         updatePostsList() {
           this.$emit("update-posts-list")
+        },
+        confirmPostDeletion() {
+            if (!this.displayConfirmDeletion) {
+                this.displayConfirmDeletion = true
+            } else {
+                this.displayConfirmDeletion = false
+            }
         }
     }
 }
@@ -73,6 +90,11 @@ export default {
             border: 1px solid black;
             border-radius: 10px;
             margin: 5px 0;
+        }
+        &--confirmDeletion {
+            margin-top: 20px;
+            width: 50%;
+            align-self: center;
         }
     }
 }
