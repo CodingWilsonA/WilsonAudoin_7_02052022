@@ -4,7 +4,7 @@
         <div v-if="displayPostModification" class="postModification">
             <v-text-field v-model="postModificationText" label="Modifiez le texte de votre post ici"></v-text-field>
             <div class="postModification--buttons">
-                <button>Mettre à jour</button>
+                <button @click="updatePost">Mettre à jour</button>
                 <button>Modifier l'image</button>
                 <button @click="togglePostModification">Annuler</button>
             </div>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-
+import PostsService from '../services/PostsService'
 
 export default {
     data() {
@@ -25,6 +25,12 @@ export default {
     methods: {
         togglePostModification() {
             !this.displayPostModification ? this.displayPostModification = true : this.displayPostModification = false
+        },
+        async updatePost() {
+            this.togglePostModification()
+            await PostsService.updatePost({
+                modifiedContent: this.postModificationText
+            })
         }
     }
    

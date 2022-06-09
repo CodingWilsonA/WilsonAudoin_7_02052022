@@ -7,6 +7,9 @@ export default {
   createPost(postData) {
     return Api().post("api/posts", postData);
   },
+  updatePost(postDataToUpdate) {
+    return Api().put("api/posts", postDataToUpdate);
+  },
   deletePost(params) {
     return Api().delete("api/posts", { data: { params } });
   },
