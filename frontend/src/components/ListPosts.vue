@@ -5,7 +5,9 @@
         </p>
         <img v-if="imgUrl !== null" :src="imgUrl">
         <add-like 
+            @update-posts-list="updatePostsList"
             :postLikes="this.likes"
+            :likedPostId="this.postId"
         />
         <p>Créé le : {{ this.formatDate(creationDate) }} par {{ authorFirstName }} {{ authorLastName }}</p>
         <p v-if="updateDate !== null">Modifié le: {{ this.formatDate(updateDate) }}</p>

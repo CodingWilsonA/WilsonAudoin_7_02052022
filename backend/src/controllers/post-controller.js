@@ -76,4 +76,27 @@ const modifyPost = (req, res) => {
   }
 };
 
-module.exports = { getAllPosts, createPost, deletePost, modifyPost };
+const updateLikes = (req, res) => {
+  try {
+    db.query(
+      "UPDATE posts SET likes = likes + 1 WHERE post_id = ?",
+      [req.body.postId],
+      function (err) {
+        if (err) {
+          return res.status(400).json({ message: err.message });
+        }
+        return res.status(200).json({ message: "Likes successfully updated" });
+      }
+    );
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = {
+  getAllPosts,
+  createPost,
+  deletePost,
+  modifyPost,
+  updateLikes,
+};
