@@ -10,7 +10,10 @@
         <p>Créé le : {{ this.formatDate(creationDate) }} par {{ authorFirstName }} {{ authorLastName }}</p>
         <p v-if="updateDate !== null">Modifié le: {{ this.formatDate(updateDate) }}</p>
         <div v-if="authorId === this.$store.state.userId || this.$store.state.userAuthLvl === 1" class="post--buttons">
-            <modify-post />
+            <modify-post 
+            @update-posts-list="updatePostsList"
+            :postToModify="this.postId"
+            />
             <button @click="togglePostDeletion">Supprimer ce post</button>
             <div v-if="displayConfirmDeletion !== false" class="post--buttons--confirmDeletion">
                 <p>Êtes-vous sûr de vouloir supprimer ce post ?</p>

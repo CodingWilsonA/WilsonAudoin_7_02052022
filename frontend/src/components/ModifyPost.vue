@@ -4,7 +4,8 @@
         <div v-if="displayPostModification" class="postModification">
             <v-text-field v-model="postModificationText" label="Modifiez le texte de votre post ici"></v-text-field>
             <div class="postModification--buttons">
-                <button @click="updatePost">Mettre à jour</button>
+                <button v-if="postModificationText === ''" class="postModification--buttons__invalid">Mettre à jour</button>
+                <button v-else @click="updatePost">Mettre à jour</button>
                 <button>Modifier l'image</button>
                 <button @click="togglePostModification">Annuler</button>
             </div>
@@ -27,11 +28,24 @@ export default {
             !this.displayPostModification ? this.displayPostModification = true : this.displayPostModification = false
         },
         async updatePost() {
-            this.togglePostModification()
-            await PostsService.updatePost({
-                modifiedContent: this.postModificationText
-            })
+            try {
+                this.togglePostModification()
+                await PostsService.updatePost({
+                    modifiedContent: this.postModificationText,
+                    postId: this.postToModify
+                })
+                this.updatePostsList()
+                this.postModificationText = ''
+            } catch (err) {
+                console.error(err.message)
+            }
+        },
+        updatePostsList() {
+            this.$emit("update-posts-list")
         }
+    },
+    props: {
+        postToModify: Number
     }
    
 }
@@ -43,6 +57,10 @@ export default {
     &--buttons {
         display: flex;
         justify-content: space-between;
+        &__invalid {
+            background-color: #FD2D01;
+            color: #FFD7D7;
+        }
         & button {
             width: 30%;
         }
