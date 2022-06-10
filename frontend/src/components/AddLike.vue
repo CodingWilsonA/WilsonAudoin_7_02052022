@@ -15,7 +15,8 @@ import PostsService from '../services/PostsService'
 export default {
     props: {
         postLikes: Number,
-        likedPostId: Number
+        likedPostId: Number,
+        userIdLiked: Number
     },
     methods: {
         async updateLikes() {
@@ -23,7 +24,19 @@ export default {
                 await PostsService.updateLikes({
                     postId: this.likedPostId
                 })
+                this.postUserIdLike()
                 this.updatePostsList()
+            } catch (err) {
+                console.error(err.message)
+                return
+            }
+        },
+        async postUserIdLike() {
+            try {
+                await PostsService.postUserIdLike({
+                    userId: this.userIdLiked,
+                    postId: this.likedPostId
+                })
             } catch (err) {
                 console.error(err.message)
                 return

@@ -45,8 +45,8 @@ const createPost = async (req, res) => {
 const deletePost = (req, res) => {
   try {
     db.query(
-      "DELETE FROM posts WHERE post_id = ?",
-      [req.body.params.postIdToDelete],
+      "DELETE FROM users_likes WHERE post_id = ?; DELETE FROM posts WHERE post_id = ?",
+      [req.body.params.postIdToDelete, req.body.params.postIdToDelete],
       function (err) {
         if (err) {
           return res.status(400).json({ message: err.message });
@@ -93,10 +93,30 @@ const updateLikes = (req, res) => {
   }
 };
 
+const postUserLike = (req, res) => {
+  try {
+    db.query(
+      "INSERT INTO users_likes (user_id, post_id) VALUES (?,?)",
+      [req.body.userId, req.body.postId],
+      function (err) {
+        if (err) {
+          return res.status(400).json({ message: err.message });
+        }
+        return res
+          .status(201)
+          .json({ message: "User id who liked post successfully saved" });
+      }
+    );
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getAllPosts,
   createPost,
   deletePost,
   modifyPost,
   updateLikes,
+  postUserLike,
 };
