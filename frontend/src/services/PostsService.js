@@ -13,6 +13,9 @@ export default {
   updateLikes(likedPostId) {
     return Api().put("api/posts/likes", likedPostId);
   },
+  postUserIdLike(userIdPostId) {
+    return Api().post("api/posts/usersLiked", userIdPostId);
+  },
   deletePost(params) {
     return Api().delete("api/posts", { data: { params } });
   },
