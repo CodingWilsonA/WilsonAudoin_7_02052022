@@ -19,6 +19,19 @@ const getAllPosts = (req, res) => {
   }
 };
 
+const getUsersWhoLiked = (req, res) => {
+  try {
+    db.query("SELECT * FROM users_likes", function (err, usersLikesArray) {
+      if (err) {
+        return res.status(404).json({ message: err.message });
+      }
+      return res.status(200).json(usersLikesArray);
+    });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 const createPost = async (req, res) => {
   try {
     const post = await postModel.validateAsync({
@@ -114,6 +127,7 @@ const postUserLike = (req, res) => {
 
 module.exports = {
   getAllPosts,
+  getUsersWhoLiked,
   createPost,
   deletePost,
   modifyPost,

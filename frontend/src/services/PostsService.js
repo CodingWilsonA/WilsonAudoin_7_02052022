@@ -4,6 +4,9 @@ export default {
   getAllPosts() {
     return Api().get("api/posts");
   },
+  getUsersWhoLiked() {
+    return Api().get("api/posts/usersLiked");
+  },
   createPost(postData) {
     return Api().post("api/posts", postData);
   },
