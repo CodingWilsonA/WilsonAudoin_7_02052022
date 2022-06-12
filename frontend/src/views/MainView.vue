@@ -48,6 +48,7 @@ export default {
   },
   methods: {
     logout() {
+      localStorage.removeItem('groupoUser')
       this.$store.dispatch('storeToken', null)
       this.$store.dispatch('storeUserId', null)
       this.$store.dispatch('storeUserAuthLvl', null)
@@ -66,10 +67,15 @@ export default {
     }
   },
   beforeMount() {
-    if (!this.$store.state.userLoggedIn) {
+    if (!localStorage.getItem('groupoUser')) {
       this.logout()
+    } else {
+      const groupoUser = JSON.parse(localStorage.getItem('groupoUser'))
+      this.$store.dispatch('storeToken', groupoUser.token)
+      this.$store.dispatch('storeUserId', groupoUser.userId)
+      this.$store.dispatch('storeUserAuthLvl', groupoUser.userAuthLvl)
+      this.getAllPosts()
     }
-    this.getAllPosts()
   }
 }
 </script>
