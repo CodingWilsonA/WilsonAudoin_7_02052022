@@ -32,9 +32,12 @@ export default {
             email: this.email,
             password: this.password
           })
-          this.$store.dispatch('storeToken', loginServiceResponse.data.token)
-          this.$store.dispatch('storeUserId', loginServiceResponse.data.userId)
-          this.$store.dispatch('storeUserAuthLvl', loginServiceResponse.data.userAuthLvl)
+          const groupoUser = {
+            token: loginServiceResponse.data.token,
+            userId: loginServiceResponse.data.userId,
+            userAuthLvl: loginServiceResponse.data.userAuthLvl
+          }
+          localStorage.setItem('groupoUser', JSON.stringify(groupoUser))
           this.$router.push({
             name: 'main'
           })
@@ -46,6 +49,13 @@ export default {
       } else {
         this.errorMessage = 'Veuillez entrer une adresse email et un mot de passe.'
       }
+    }
+  },
+  beforeMount() {
+    if (localStorage.getItem('groupoUser')) {
+      this.$router.push({
+        name: 'main'
+      })
     }
   }
 }

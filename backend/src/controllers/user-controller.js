@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const session = require("express-session");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 const db = require("../services/database");
