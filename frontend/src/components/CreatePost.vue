@@ -3,7 +3,7 @@
         <h2>Créez votre post ici</h2>
         <v-text-field v-model="postText" label="Exprimez-vous"></v-text-field>
         <div class="createPost--buttonsContainer">
-            <button class="createPost--buttonsContainer--button">Ajoutez une image</button>
+            <add-image />
             <button v-if="this.postText === ''" class="createPost--buttonsContainer--button createPost--buttonsContainer__invalidButton">Envoyer</button>
             <button v-else @click="createPost" class="createPost--buttonsContainer--button createPost--buttonsContainer__validButton">Envoyer</button>
         </div>
@@ -13,8 +13,12 @@
 
 <script>
 import PostsService from '../services/PostsService'
+import AddImage from './AddImage.vue'
 
 export default {
+    components: {
+        AddImage
+    },
     data() {
         return {
             postText: '',
@@ -62,6 +66,7 @@ export default {
         display: flex;
         flex-direction: column;
         &--button {
+        cursor: pointer;
         font-weight: bold;
         background-color: #FFD7D7;
         padding: 5px;
@@ -71,8 +76,12 @@ export default {
         &__invalidButton {
             background-color: #FD2D01;
             color: #FFD7D7;
+            cursor: default;
         }
     }
+}
+#getImage {
+    display: none;
 }
 
 </style>

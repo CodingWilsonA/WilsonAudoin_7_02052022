@@ -19,6 +19,9 @@ export default {
   postUserIdLike(userIdPostId) {
     return Api().post("api/posts/usersLiked", userIdPostId);
   },
+  uploadImage(imageData) {
+    return Api().post("api/posts/images", imageData);
+  },
   deletePost(params) {
     return Api().delete("api/posts", { data: { params } });
   },
