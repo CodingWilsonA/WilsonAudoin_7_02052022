@@ -36,11 +36,12 @@ const createPost = async (req, res) => {
   try {
     const post = await postModel.validateAsync({
       content: req.body.content,
+      imageUrl: req.body.imageUrl,
       authorId: req.body.authorId,
     });
     db.query(
-      "INSERT INTO posts (content, author_id) VALUES (?,?)",
-      [post.content, post.authorId],
+      "INSERT INTO posts (content, img_url, author_id) VALUES (?,?,?)",
+      [post.content, post.imageUrl, post.authorId],
       function (err) {
         if (err) {
           return res

@@ -29,6 +29,7 @@ export default {
             try {
                 const uploadImageServiceResponse = await PostService.uploadImage(formData)
                 this.imageUrl = uploadImageServiceResponse.data.filePath
+                this.sendImageUrlToParent()
                 this.errorMessage = ""
             } catch(err) {
                 if (err.response.data.message === "INVALID_FILE_TYPE") {
@@ -39,6 +40,9 @@ export default {
                     console.log(err.response.data.message)
                 }
             }
+        },
+        sendImageUrlToParent() {
+            this.$emit("send-img-url", {imgUrl: this.imageUrl})
         }
     }
 }

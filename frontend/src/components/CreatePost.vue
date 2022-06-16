@@ -3,7 +3,7 @@
         <h2>Créez votre post ici</h2>
         <v-text-field v-model="postText" label="Exprimez-vous"></v-text-field>
         <div class="createPost--buttonsContainer">
-            <add-image />
+            <add-image @send-img-url="setImageUrl"/>
             <button v-if="this.postText === ''" class="createPost--buttonsContainer--button createPost--buttonsContainer__invalidButton">Envoyer</button>
             <button v-else @click="createPost" class="createPost--buttonsContainer--button createPost--buttonsContainer__validButton">Envoyer</button>
         </div>
@@ -22,6 +22,7 @@ export default {
     data() {
         return {
             postText: '',
+            imageUrl: '',
             errorMessage: ''
         }
     },
@@ -30,10 +31,13 @@ export default {
       try {
         await PostsService.createPost({
         content: this.postText,
+        imageUrl: this.imageUrl,
         authorId: this.$store.state.userId,
         })
         this.updatePostsList()
         this.postText = ''
+        this.imageUrl = ''
+        this.errorMessage = ''
       } catch (err) {
         this.errorMessage = 'Oups ! votre post n\'a pas pu être créé. Veuillez réessayer ultérieurement.'
         this.postText = ''
@@ -42,6 +46,9 @@ export default {
       },
       updatePostsList() {
           this.$emit("update-posts-list")
+      },
+      setImageUrl(payload) {
+          this.imageUrl = payload.imgUrl
       }
     }
 }
