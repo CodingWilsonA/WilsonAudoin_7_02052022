@@ -125,6 +125,14 @@ const postUserLike = (req, res) => {
   }
 };
 
+const uploadImage = (req, res) => {
+  res.status(201).json({
+    filePath: `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`,
+  });
+};
+
 module.exports = {
   getAllPosts,
   getUsersWhoLiked,
@@ -133,4 +141,5 @@ module.exports = {
   modifyPost,
   updateLikes,
   postUserLike,
+  uploadImage,
 };
