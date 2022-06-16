@@ -1,5 +1,6 @@
 <template>
     <form enctype="multipart/form-data" class="createPost--buttonsContainer">
+        <img v-if="this.imageUrl !== ''" :src="this.imageUrl" class="createPost--buttonsContainer--postImage"/>
         <p v-if="errorMessage !== ''">{{ errorMessage }}</p>
         <label for="getImage" class="createPost--buttonsContainer--button">Ajoutez une image</label>
         <input type="file" ref="imageFile" name="getImage" id="getImage" @change="selectImage">
@@ -13,6 +14,7 @@ export default {
     data() {
         return {
             imageFile: '',
+            imageUrl: '',
             errorMessage: ''
         }
     },
@@ -25,10 +27,17 @@ export default {
             const formData = new FormData()
             formData.append('imageFile', imageFile)
             try {
-                await PostService.uploadImage(formData)
+                const uploadImageServiceResponse = await PostService.uploadImage(formData)
+                this.imageUrl = uploadImageServiceResponse.data.filePath
+                this.errorMessage = ""
             } catch(err) {
-                this.errorMessage = "Oops ! Nous n'avons pas pu ajouter votre image."
-                console.error(err.message)
+                if (err.response.data.message === "INVALID_FILE_TYPE") {
+                    this.errorMessage = "Vous pouvez seulement ajouter des fichiers de type image (jpg, jpeg, png ou gif)."
+                    console.error(err.response.data.message)
+                } else {
+                    this.errorMessage = "Oops ! Nous n'avons pas pu ajouter votre image."
+                    console.log(err.response.data.message)
+                }
             }
         }
     }
@@ -39,13 +48,19 @@ export default {
 
 <style scoped lang="scss">
 
-.createPost--buttonsContainer--button {
-    cursor: pointer;
-    font-weight: bold;
-    background-color: #FFD7D7;
-    padding: 5px;
-    border-radius: 10px;
-    margin-top: 20px;
+.createPost--buttonsContainer{
+        &--button {
+        cursor: pointer;
+        font-weight: bold;
+        background-color: #FFD7D7;
+        padding: 5px;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+        &--postImage {
+            align-self: center;
+            width: 200px;
+        }
 }
     
 
