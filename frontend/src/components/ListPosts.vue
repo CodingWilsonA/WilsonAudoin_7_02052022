@@ -3,7 +3,7 @@
         <p>
             {{ content }}
         </p>
-        <img v-if="imgUrl !== null" :src="imgUrl">
+        <img v-if="imgUrl" :src="imgUrl">
         <add-like 
             @update-posts-list="updatePostsList"
             :postLikes="this.likes"
