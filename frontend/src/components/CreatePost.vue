@@ -3,6 +3,7 @@
         <h2>Créez votre post ici</h2>
         <v-text-field v-model="postText" label="Exprimez-vous"></v-text-field>
         <div class="createPost--buttonsContainer">
+            <img v-if="imageUrl" :src="this.imageUrl" class="createPost--buttonsContainer--postImage"/>
             <add-image @send-img-url="setImageUrl"/>
             <button v-if="this.postText === ''" class="createPost--buttonsContainer--button createPost--buttonsContainer__invalidButton">Envoyer</button>
             <button v-else @click="createPost" class="createPost--buttonsContainer--button createPost--buttonsContainer__validButton">Envoyer</button>
@@ -34,10 +35,10 @@ export default {
         imageUrl: this.imageUrl,
         authorId: this.$store.state.userId,
         })
-        this.updatePostsList()
         this.postText = ''
         this.imageUrl = ''
         this.errorMessage = ''
+        this.updatePostsList()
       } catch (err) {
         this.errorMessage = 'Oups ! votre post n\'a pas pu être créé. Veuillez réessayer ultérieurement.'
         this.postText = ''
@@ -79,6 +80,10 @@ export default {
         padding: 5px;
         border-radius: 10px;
         margin-top: 20px;
+        }
+        &--postImage {
+            align-self: center;
+            width: 200px;
         }
         &__invalidButton {
             background-color: #FD2D01;

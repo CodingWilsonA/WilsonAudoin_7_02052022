@@ -1,5 +1,6 @@
 const db = require("../services/database");
 const postModel = require("../models/post-model");
+const fs = require("fs");
 
 const getAllPosts = (req, res) => {
   try {
@@ -36,7 +37,7 @@ const createPost = async (req, res) => {
   try {
     const post = await postModel.validateAsync({
       content: req.body.content,
-      imageUrl: req.body.imageUrl,
+      imageUrl: req.body.imageUrl === "" ? null : req.body.imageUrl,
       authorId: req.body.authorId,
     });
     db.query(
@@ -59,11 +60,27 @@ const createPost = async (req, res) => {
 const deletePost = (req, res) => {
   try {
     db.query(
-      "DELETE FROM users_likes WHERE post_id = ?; DELETE FROM posts WHERE post_id = ?",
-      [req.body.params.postIdToDelete, req.body.params.postIdToDelete],
-      function (err) {
+      `SELECT img_url FROM posts WHERE post_id = ?;
+      DELETE FROM users_likes WHERE post_id = ?; 
+      DELETE FROM posts WHERE post_id = ?`,
+      [
+        req.body.params.postIdToDelete,
+        req.body.params.postIdToDelete,
+        req.body.params.postIdToDelete,
+      ],
+      function (err, queryResponses) {
         if (err) {
           return res.status(400).json({ message: err.message });
+        }
+        if (queryResponses[0][0].img_url) {
+          const fileName = queryResponses[0][0].img_url.split("/images/")[1];
+          fs.unlink(`images/${fileName}`, (err) => {
+            if (err) {
+              console.error("Unlink failed :", err);
+            } else {
+              console.log("File deleted");
+            }
+          });
         }
         return res.status(204).json({ message: "Post successfully deleted" });
       }
