@@ -1,6 +1,5 @@
 <template>
     <form enctype="multipart/form-data" class="createPost--buttonsContainer">
-        <img v-if="this.imageUrl !== ''" :src="this.imageUrl" class="createPost--buttonsContainer--postImage"/>
         <p v-if="errorMessage !== ''">{{ errorMessage }}</p>
         <label for="getImage" class="createPost--buttonsContainer--button">Ajoutez une image</label>
         <input type="file" ref="imageFile" name="getImage" id="getImage" @change="selectImage">
@@ -37,7 +36,7 @@ export default {
                     console.error(err.response.data.message)
                 } else {
                     this.errorMessage = "Oops ! Nous n'avons pas pu ajouter votre image."
-                    console.log(err.response.data.message)
+                    console.error(err.response.data.message)
                 }
             }
         },
@@ -61,10 +60,6 @@ export default {
         border-radius: 10px;
         margin-top: 20px;
     }
-        &--postImage {
-            align-self: center;
-            width: 200px;
-        }
 }
     
 
