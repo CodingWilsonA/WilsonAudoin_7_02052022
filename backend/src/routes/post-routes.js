@@ -1,9 +1,10 @@
 const express = require("express");
+const router = express.Router();
+const auth = require("../middleware/auth");
 const {
   imageUpload,
   imageValidationErrorHandler,
 } = require("../middleware/multer-config.js");
-const router = express.Router();
 const {
   getAllPosts,
   getUsersWhoLiked,
@@ -15,17 +16,18 @@ const {
   uploadImage,
 } = require("../controllers/post-controller");
 
-router.get("/posts", getAllPosts);
-router.get("/posts/usersLiked", getUsersWhoLiked);
-router.post("/posts", createPost);
-router.post("/posts/usersLiked", postUserLike);
+router.get("/posts", auth, getAllPosts);
+router.get("/posts/usersLiked", auth, getUsersWhoLiked);
+router.post("/posts", auth, createPost);
+router.post("/posts/usersLiked", auth, postUserLike);
 router.post(
   "/posts/images",
+  auth,
   imageUpload.single("imageFile"),
   imageValidationErrorHandler,
   uploadImage
 );
-router.put("/posts", modifyPost);
-router.put("/posts/likes", updateLikes);
-router.delete("/posts", deletePost);
+router.put("/posts", auth, modifyPost);
+router.put("/posts/likes", auth, updateLikes);
+router.delete("/posts", auth, deletePost);
 module.exports = router;
