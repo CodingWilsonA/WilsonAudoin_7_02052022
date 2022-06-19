@@ -1,28 +1,28 @@
-import Api from "./Api";
+import postsServicesApi from "./PostsServicesApi";
 
 export default {
   getAllPosts() {
-    return Api().get("api/posts");
+    return postsServicesApi.get("api/posts");
   },
   getUsersWhoLiked() {
-    return Api().get("api/posts/usersLiked");
+    return postsServicesApi.get("api/posts/usersLiked");
   },
   createPost(postData) {
-    return Api().post("api/posts", postData);
+    return postsServicesApi.post("api/posts", postData);
   },
   updatePost(postDataToUpdate) {
-    return Api().put("api/posts", postDataToUpdate);
+    return postsServicesApi.put("api/posts", postDataToUpdate);
   },
   updateLikes(likedPostId) {
-    return Api().put("api/posts/likes", likedPostId);
+    return postsServicesApi.put("api/posts/likes", likedPostId);
   },
   postUserIdLike(userIdPostId) {
-    return Api().post("api/posts/usersLiked", userIdPostId);
+    return postsServicesApi.post("api/posts/usersLiked", userIdPostId);
   },
   uploadImage(imageData) {
-    return Api().post("api/posts/images", imageData);
+    return postsServicesApi.post("api/posts/images", imageData);
   },
   deletePost(params) {
-    return Api().delete("api/posts", { data: { params } });
+    return postsServicesApi.delete("api/posts", { data: { params } });
   },
 };
