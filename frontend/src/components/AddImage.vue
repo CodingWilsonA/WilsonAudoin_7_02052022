@@ -21,6 +21,7 @@ export default {
         selectImage() {
             this.imageFile = this.$refs.imageFile.files[0]
             this.sendImageFile(this.imageFile)
+            this.$refs.imageFile.value = ''
         },
         async sendImageFile(imageFile) {
             const formData = new FormData()
