@@ -36,6 +36,9 @@ const imageUpload = multer({
 });
 
 const imageValidationErrorHandler = (err, req, res, next) => {
+  if (err.code === "LIMIT_FILE_SIZE") {
+    res.status(422).json({ message: "INVALID_FILE_SIZE" });
+  }
   if (err.message === "INVALID_FILE_TYPE") {
     res.status(422).json({ message: "INVALID_FILE_TYPE" });
   }

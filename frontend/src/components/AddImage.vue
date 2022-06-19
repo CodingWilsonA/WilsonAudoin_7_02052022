@@ -35,6 +35,9 @@ export default {
                 if (err.response.data.message === "INVALID_FILE_TYPE") {
                     this.errorMessage = "Vous pouvez seulement ajouter des fichiers de type image (jpg, jpeg, png ou gif)."
                     console.error(err.response.data.message)
+                } else if (err.response.data.message === "INVALID_FILE_SIZE") {
+                    this.errorMessage = "Cette image est trop volumineuse (max: 500Ko)."
+                    console.error(err.response.data.message)
                 } else {
                     this.errorMessage = "Oops ! Nous n'avons pas pu ajouter votre image."
                     console.error(err.response.data.message)
