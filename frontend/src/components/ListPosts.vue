@@ -67,8 +67,9 @@ export default {
     list-style: none;
     margin: 30px 0;
     padding: 10px;
-    border: 1px solid black;
-    border-radius: 20px;;
+    border: 1px solid #4E5166;
+    box-shadow: 0px 0px 10px #FFD7D7;
+    border-radius: 20px;
     background-color: #FFD7D7;
 }
 </style>

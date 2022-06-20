@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <v-toolbar>
+    <v-toolbar id="toolbar">
       <h1>
         Groupomania
       </h1>
@@ -82,6 +82,7 @@ export default {
 
 <style scoped lang="scss">
 .main {
+  position: relative;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -93,6 +94,8 @@ export default {
     padding: 5px;
     font-weight: bold;
     color: #FD2D01; 
+    border: 3px solid #4E5166;
+    border-radius: 20px;
     background-color: #FFD7D7;
     opacity: 0.8;
     &:hover {
@@ -106,5 +109,11 @@ export default {
   }
 }
 
-
+#toolbar {
+    background-color: #FFD7D7;
+    box-shadow: 0px 0px 10px #4E5166;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
 </style>

@@ -60,10 +60,12 @@ export default {
 <style scoped lang="scss">
 
 .createPost {
-    margin-top: 20px;
+    background-color: white;
+    margin-top: 40px;
     width: 80vw;
     align-self: center;
     border: 1px solid #4E5166;
+    box-shadow: 0px 0px 10px #FFD7D7;
     border-radius: 15px;
     padding: 20px;
     & h2 {

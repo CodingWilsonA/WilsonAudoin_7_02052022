@@ -2,7 +2,7 @@
   <div id="app">
     <v-app>
       <v-main>
-        <img v-if="!$store.state.userLoggedIn" class="homeLogo" alt="Groupomania logo" src="./assets/icon.svg">
+        <img v-if="!$store.state.userLoggedIn" class="homeLogo" alt="Groupomania logo" src="./assets/img/groupomania-logo.png">
         <nav v-if="!$store.state.userLoggedIn">
           <router-link to="/">Se connecter</router-link>
           <v-spacer></v-spacer>
@@ -19,6 +19,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap');
 
 #app {
+  background: linear-gradient(#4E5166 20%, #FFD7D7);
+  background-attachment: fixed;
   font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
