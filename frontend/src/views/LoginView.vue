@@ -64,9 +64,11 @@ export default {
 <style scoped lang="scss">
 
 .loginFields {
+  background-color: white;
   padding: 10px;
   border-radius: 20px;
-  box-shadow: 0px 0px 10px #4E5166;
+  border: 1px solid #4E5166;
+  box-shadow: 0px 0px 10px #FFD7D7;
     &--container {
       display: flex;
       flex-direction: column;
