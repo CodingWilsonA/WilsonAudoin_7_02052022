@@ -11,7 +11,7 @@
         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" 
         :type="show ? 'text' : 'password'" 
         :rules="[rules.required, rules.min]"
-        counter
+        counter="8"
         @click:append="show = !show"
       ></v-text-field>
     </div>
@@ -87,7 +87,7 @@ export default {
   }
       &__emailError {
         text-align: left;
-        font-size: 11px;
+        font-size: 16px;
         font-weight: bold;
         color: red;
       }
