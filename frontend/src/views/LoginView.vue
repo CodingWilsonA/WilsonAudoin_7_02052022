@@ -64,35 +64,37 @@ export default {
 <style scoped lang="scss">
 
 .loginFields {
-  background-color: white;
+  font-weight: bold;
+  background:rgba(78,81,102,0.65);
   padding: 10px;
   border-radius: 20px;
   border: 1px solid #4E5166;
   box-shadow: 0px 0px 10px #FFD7D7;
-    &--container {
-      display: flex;
-      flex-direction: column;
-      width: 400px;
-      @media screen and (max-width: 424px) {
-          width: 280px;
-      }
+  margin-bottom: 50px;
+  &--container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    @media screen and (max-width: 424px) {
+        width: 280px;
     }
-    &--errorMessage {
-      font-size: 11px;
-      font-weight: bold;
-      color: red;
-      margin-bottom: 15px;
-      text-align: left;
-    }
-    &--button {
-      width: 100%;
-      font-weight: bold;
-      padding: 5px;
-      border-radius: 5px;
-      color: #FD2D01;
-      background-color: #FFD7D7;
-      margin-top: 15px;
-    }
+  }
+  &--errorMessage {
+    font-size: 11px;
+    font-weight: bold;
+    color: red;
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  &--button {
+    width: 100%;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 5px;
+    color: #FD2D01;
+    background-color: #FFD7D7;
+    margin-top: 15px;
+  }
 }
 
 </style>

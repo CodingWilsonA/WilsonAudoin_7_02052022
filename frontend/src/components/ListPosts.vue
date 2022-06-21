@@ -63,6 +63,7 @@ export default {
 
 <style scoped lang="scss">
 .post {
+    font-weight: bold;
     width: 50vw;
     list-style: none;
     margin: 30px 0;

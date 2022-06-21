@@ -73,7 +73,8 @@ export default {
 <style scoped lang="scss">
 
 .signupFields {
-  background-color: white;
+  font-weight: bold;
+  background:rgba(78,81,102,0.65);
   padding: 10px;
   border-radius: 20px;
   border: 1px solid #4E5166;
