@@ -28,6 +28,9 @@
         @update-posts-list="getAllPosts"
       />
     </ul>
+    <div v-if="this.isSessionExpired" class="main--expiredSession">
+      <p>Votre session a expiré. Vous allez être redirigés vers la page de connexion dans quelques secondes.</p>
+    </div>
   </div>
 </template>
 
@@ -39,7 +42,8 @@ import PostsService from '../services/PostsService.js'
 export default {
   data() {
     return {
-      postsArray: []
+      postsArray: [],
+      isSessionExpired: false
     }
   },
   components: { 
@@ -61,6 +65,9 @@ export default {
         const postsServiceResponse = await PostsService.getAllPosts()
         this.postsArray = postsServiceResponse.data
       } catch (err){
+        if(err.response.data.message === "Unauthenticated request !") {
+          this.isSessionExpired = true
+        }
         console.error(err.message)
         return
       }
@@ -76,6 +83,9 @@ export default {
       this.$store.dispatch('storeUserAuthLvl', groupoUser.userAuthLvl)
       this.getAllPosts()
     }
+  },
+  updated() {
+    this.isSessionExpired ? setTimeout(function() {this.logout()}.bind(this), 5000) : null
   }
 }
 </script>
@@ -89,6 +99,7 @@ export default {
   color: #FD2D01;
   & h1 {
     color: #FD2D01;
+    padding: 10px;
   }
   & button {
     padding: 5px;
@@ -106,6 +117,26 @@ export default {
     margin-top: 30px;
     align-self: center;
     padding-left: 0;
+  }
+  &--expiredSession {
+    position:fixed;
+    align-self: center;
+    background:rgba(0,0,0,0.8);
+    z-index:5;
+    width:100%;
+    height:100%;
+    & p {
+      top: 40%;
+      padding: 50px;
+      background-color: white;
+      text-align: center;
+      width: 50vw;
+      margin:0 auto;
+      position:relative;
+      z-index:10;
+      border:5px solid #FFD7D7;
+      border-radius:10px;
+    }
   }
 }
 

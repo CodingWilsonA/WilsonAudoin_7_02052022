@@ -19,7 +19,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap');
 
 #app {
-  background: linear-gradient(#4E5166 20%, #FFD7D7);
+  background: linear-gradient(#4E5166, #FFD7D7);
   background-attachment: fixed;
   font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;
