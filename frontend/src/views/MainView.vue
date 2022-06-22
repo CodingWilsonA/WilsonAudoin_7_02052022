@@ -29,8 +29,8 @@
         @update-posts-list="getAllPosts"
       />
     </ul>
-    <div v-if="this.isSessionExpired" class="main--expiredSession">
-      <p>Votre session a expiré. Vous allez être redirigés vers la page de connexion dans quelques secondes.</p>
+    <div v-if="this.isSessionInvalid" class="main--invalidSession">
+      <p>{{ errorMessage }}</p>
     </div>
   </div>
 </template>
@@ -44,7 +44,8 @@ export default {
   data() {
     return {
       postsArray: [],
-      isSessionExpired: false
+      isSessionInvalid: false,
+      errorMessage: '',
     }
   },
   components: { 
@@ -66,11 +67,17 @@ export default {
         const postsServiceResponse = await PostsService.getAllPosts()
         this.postsArray = postsServiceResponse.data
       } catch (err){
-        if(err.response.data.message === "Unauthenticated request !") {
-          this.isSessionExpired = true
+        if (err.response.data && err.response.data.message === "Unauthenticated request !") {
+          this.isSessionInvalid = true
+          this.errorMessage = "Votre session a expiré. Vous allez être redirigés vers la page de connexion dans quelques secondes."
+          console.error(err.response.data.message)
+          return
+        } else if (err.code === "ERR_NETWORK") {
+          this.isSessionInvalid = true
+          this.errorMessage = "Le serveur de l'application est actuellement indisponible. Vous allez être redirigés vers la page de connexion dans quelques secondes."
+          console.error(err.code)
+          return
         }
-        console.error(err.message)
-        return
       }
     }
   },
@@ -86,7 +93,7 @@ export default {
     }
   },
   updated() {
-    this.isSessionExpired ? setTimeout(function() {this.logout()}.bind(this), 5000) : null
+    this.isSessionInvalid ? setTimeout(function() {this.logout()}.bind(this), 6000) : null
   }
 }
 </script>
@@ -130,7 +137,7 @@ export default {
     align-self: center;
     padding-left: 0;
   }
-  &--expiredSession {
+  &--invalidSession {
     position:fixed;
     align-self: center;
     background:rgba(0,0,0,0.8);

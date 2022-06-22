@@ -11,10 +11,11 @@
         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" 
         :type="show ? 'text' : 'password'" 
         :rules="[rules.required, rules.min]"
-        counter="8"
+        counter
         @click:append="show = !show"
       ></v-text-field>
     </div>
+    <p v-if="errorMessage" class="signupFields--errorMessage"> {{ errorMessage }}</p>
     <button class="signupFields--button signupFields--button__invalid" v-if="this.firstName === '' || this.lastName === '' || this.validEmail !== true || this.password.length < 8">S'inscrire</button>
     <button class="signupFields--button signupFields--button__valid" v-else @click="register">S'inscrire</button>
   </div>
@@ -29,6 +30,7 @@ export default {
       show: false,
       validEmail: false,
       duplicateEmailMessage: '',
+      errorMessage: '',
       rules: {
         required: value => !!value || 'Ce champs est requis.',
         min: v => v.length >= 8 || 'Le mot de passe doit être de 8 caractères minimum',
@@ -60,10 +62,15 @@ export default {
         password: this.password
       })
       } catch (err){
-        if (err.response.data.message.includes('Duplicate')) {
+        if (err.response.data && err.response.data.message.includes('Duplicate')) {
           this.duplicateEmailMessage = "Un compte est déjà enregistré avec cette adresse email."
-        }
-        return console.error(err.response.data)
+          console.error(err.response.data)
+          return
+        } else if (err.code === "ERR_NETWORK") {
+          this.errorMessage = 'Le serveur de l\'application est actuellement indisponible. Veuillez essayer ultérieurement.'
+          console.error(err.message)
+          return
+        } 
       }
     }
   }
@@ -83,13 +90,25 @@ export default {
     &--container {
       width: 400px;
       @media screen and (max-width: 424px) {
-      width: 280px;
-  }
+        width: 280px;
+      }
       &__emailError {
+        text-shadow: 0px 0px 2px black;
         text-align: left;
         font-size: 16px;
         font-weight: bold;
         color: red;
+      }
+    }
+    &--errorMessage {
+      max-width: 400px;
+      text-shadow: 0px 0px 2px black;
+      text-align: left;
+      font-size: 16px;
+      font-weight: bold;
+      color: red;
+      @media screen and (max-width: 424px) {
+        max-width: 280px;
       }
     }
     &--button {
