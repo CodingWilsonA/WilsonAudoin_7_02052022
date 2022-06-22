@@ -58,6 +58,8 @@ export default {
         display: flex;
         justify-content: space-between;
         &__invalid {
+            opacity: 1;
+            cursor: default;
             background-color: #FD2D01;
             color: #FFD7D7;
         }
@@ -67,10 +69,17 @@ export default {
     }
 }
 button {
+    background-color: #FFD7D7;
+    color: #FD2D01;
+    opacity: 0.7;
     border: 1px solid black;
     border-radius: 10px;
     margin: 5px 0;
     width: 50%;
+    transition: all ease-in-out 200ms;
+    &:hover {
+        opacity: 1;
+    }
 }
 
 </style>

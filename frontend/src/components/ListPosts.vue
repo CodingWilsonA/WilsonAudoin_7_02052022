@@ -63,6 +63,7 @@ export default {
 
 <style scoped lang="scss">
 .post {
+    color: #FFD7D7;
     font-weight: bold;
     width: 50vw;
     list-style: none;
@@ -71,6 +72,6 @@ export default {
     border: 1px solid #4E5166;
     box-shadow: 0px 0px 10px #FFD7D7;
     border-radius: 20px;
-    background-color: #FFD7D7;
+    background:rgba(78,81,102,0.65);
 }
 </style>

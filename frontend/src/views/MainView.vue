@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <v-toolbar id="toolbar">
+      <img class="main--toolbar--groupomaniaLogo" src="../assets/img/groupomania-icon.png" alt="Logo de Groupomania"/>
       <h1>
         Groupomania
       </h1>
@@ -102,16 +103,25 @@ export default {
     padding: 10px;
   }
   & button {
+    margin: 5px;
     padding: 5px;
     font-weight: bold;
     color: #FD2D01; 
     border: 3px solid #4E5166;
     border-radius: 20px;
     background-color: #FFD7D7;
-    opacity: 0.8;
+    opacity: 0.7;
+    transition: all ease-in-out 200ms;
     &:hover {
       opacity: 1;
     }
+  }
+  &--toolbar--groupomaniaLogo {
+    width: 70px;
+    -webkit-filter: drop-shadow(0px 0px 2px #FD2D01)
+                  drop-shadow(0px 0px 2px #FD2D01);
+    filter: drop-shadow(0px 0px 2px #FD2D01) 
+          drop-shadow(0px 0px 2px #FD2D01);
   }
   &--postList {
     margin-top: 30px;

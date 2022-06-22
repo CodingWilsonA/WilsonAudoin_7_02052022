@@ -63,6 +63,11 @@ export default {
         padding: 5px;
         border-radius: 10px;
         margin-top: 20px;
+        opacity: 0.7;
+        transition: all ease-in-out 200ms;
+        &:hover {
+            opacity: 1;
+        }
     }
 }
     

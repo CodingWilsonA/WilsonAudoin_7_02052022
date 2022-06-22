@@ -60,7 +60,7 @@ export default {
 <style scoped lang="scss">
 
 .createPost {
-    background-color: white;
+    background:rgba(78,81,102,0.65);
     margin-top: 40px;
     width: 80vw;
     align-self: center;
@@ -82,12 +82,18 @@ export default {
         padding: 5px;
         border-radius: 10px;
         margin-top: 20px;
+        opacity: 0.7;
+        transition: all ease-in-out 200ms;
+        &:hover {
+            opacity: 1;
+        }
         }
         &--postImage {
             align-self: center;
             width: 200px;
         }
         &__invalidButton {
+            opacity: 1;
             background-color: #FD2D01;
             color: #FFD7D7;
             cursor: default;
