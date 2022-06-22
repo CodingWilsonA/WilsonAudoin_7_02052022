@@ -48,17 +48,26 @@ export default {
         display: flex;
         flex-direction: column;
         & button {
+            background-color: #FFD7D7;
+            color: #FD2D01;
             align-self: center;
             width: 50%;
             border: 1px solid black;
             border-radius: 10px;
             margin: 5px 0;
+            opacity: 0.7;
+            transition: all ease-in-out 200ms;
+            &:hover {
+                opacity: 1;
+            }
         }
         &--confirmDeletion {
             margin-top: 20px;
             width: 50%;
             align-self: center;
             & button {
+                background-color: #FFD7D7;
+                color: #FD2D01;
                 width: 40%;
                 margin: 5px;
             }
