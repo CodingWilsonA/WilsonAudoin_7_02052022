@@ -74,4 +74,10 @@ export default {
     border-radius: 20px;
     background:rgba(78,81,102,0.65);
 }
+
+@media screen and (max-width: 770px) {
+    .post {
+        width: 80vw;
+    }
+}
 </style>
