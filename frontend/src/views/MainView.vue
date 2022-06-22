@@ -118,10 +118,12 @@ export default {
   }
   &--toolbar--groupomaniaLogo {
     width: 70px;
-    -webkit-filter: drop-shadow(0px 0px 2px #FD2D01)
-                  drop-shadow(0px 0px 2px #FD2D01);
-    filter: drop-shadow(0px 0px 2px #FD2D01) 
-          drop-shadow(0px 0px 2px #FD2D01);
+    -webkit-filter: 
+      drop-shadow(0px 0px 2px #FD2D01)
+      drop-shadow(0px 0px 2px #FD2D01);
+    filter: 
+      drop-shadow(0px 0px 2px #FD2D01) 
+      drop-shadow(0px 0px 2px #FD2D01);
   }
   &--postList {
     margin-top: 30px;
@@ -151,10 +153,29 @@ export default {
 }
 
 #toolbar {
-    background-color: #FFD7D7;
-    box-shadow: 0px 0px 10px #4E5166;
-    position: sticky;
-    top: 0;
-    z-index: 2;
+  background-color: #FFD7D7;
+  box-shadow: 0px 0px 10px #4E5166;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+@media screen and (max-width: 450px) {
+    h1 {
+        font-size: 20px;
+    }
+    .main--toolbar--groupomaniaLogo {
+      width: 50px;
+    }
   }
+
+  @media screen and (max-width: 350px) {
+    h1 {
+        font-size: 17px;
+    }
+    .main--toolbar--groupomaniaLogo {
+      width: 40px;
+    }
+  }
+  
 </style>

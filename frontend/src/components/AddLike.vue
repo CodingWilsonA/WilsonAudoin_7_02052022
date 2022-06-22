@@ -94,6 +94,7 @@ export default {
             transform: scale(1.2);
         }
         &__invalid {
+            overflow: visible;
             stroke: white;
             stroke-width: 20px;
             fill: #4E5166;
