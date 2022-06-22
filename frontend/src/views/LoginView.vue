@@ -43,8 +43,15 @@ export default {
           })
         }
         catch (err) {
-          this.errorMessage = 'Ces identifiants ne correspondent à aucun utilisateur enregistré.'
-          return console.error(err.response.data)
+          if (err.code === "ERR_NETWORK") {
+            this.errorMessage = 'Le serveur de l\'application est actuellement indisponible. Veuillez essayer ultérieurement.'
+            console.error(err.response.message)
+            return
+          } else if (err.code === "ERR_BAD_REQUEST") {
+            this.errorMessage = 'Ces identifiants ne correspondent à aucun utilisateur enregistré.'
+            console.error(err.response.message)
+            return
+          }
         }
       } else {
         this.errorMessage = 'Veuillez entrer une adresse email et un mot de passe.'
@@ -76,15 +83,20 @@ export default {
     flex-direction: column;
     width: 400px;
     @media screen and (max-width: 424px) {
-        width: 280px;
+      width: 280px;
     }
   }
   &--errorMessage {
-    font-size: 11px;
+    max-width: 400px;
+    font-size: 16px;
+    text-shadow: 0px 0px 2px black;
     font-weight: bold;
     color: red;
     margin-bottom: 15px;
     text-align: left;
+    @media screen and (max-width: 424px) {
+      max-width: 280px;
+    }
   }
   &--button {
     width: 100%;
