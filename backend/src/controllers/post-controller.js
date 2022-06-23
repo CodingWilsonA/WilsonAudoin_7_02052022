@@ -91,19 +91,75 @@ const deletePost = (req, res) => {
 };
 
 const modifyPost = (req, res) => {
-  try {
-    db.query(
-      "UPDATE posts SET content = ? WHERE post_id = ?",
-      [req.body.modifiedContent, req.body.postId],
-      function (err) {
-        if (err) {
-          return res.status(400).json({ message: err.message });
+  console.log(req.body);
+  if (req.body.modifiedContent !== "" && req.body.modifiedImage !== "") {
+    try {
+      db.query(
+        `SELECT img_url FROM posts WHERE post_id = ?;
+        UPDATE posts SET content = ?, img_url = ? WHERE post_id = ?`,
+        [
+          req.body.postId,
+          req.body.modifiedContent,
+          req.body.modifiedImage,
+          req.body.postId,
+        ],
+        function (err, queryResponses) {
+          if (err) {
+            return res.status(400).json({ message: err.message });
+          }
+          const fileName = queryResponses[0][0].img_url.split("/images/")[1];
+          fs.unlink(`images/${fileName}`, (err) => {
+            if (err) {
+              console.error("Unlink failed :", err);
+            } else {
+              console.log("File deleted");
+            }
+          });
+          return res.status(200).json({ message: "Post successfully updated" });
         }
-        return res.status(200).json({ message: "Post successfully updated" });
-      }
-    );
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
+      );
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  } else if (req.body.modifiedImage === "") {
+    try {
+      db.query(
+        "UPDATE posts SET content = ? WHERE post_id = ?",
+        [req.body.modifiedContent, req.body.postId],
+        function (err) {
+          if (err) {
+            return res.status(400).json({ message: err.message });
+          }
+          return res.status(200).json({ message: "Post successfully updated" });
+        }
+      );
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  } else {
+    try {
+      db.query(
+        `SELECT img_url FROM posts WHERE post_id = ?;
+        UPDATE posts SET img_url = ? WHERE post_id = ?`,
+        [req.body.postId, req.body.modifiedImage, req.body.postId],
+        function (err, queryResponses) {
+          if (err) {
+            return res.status(400).json({ message: err.message });
+          }
+          const fileName = queryResponses[0][0].img_url.split("/images/")[1];
+          fs.unlink(`images/${fileName}`, (err) => {
+            if (err) {
+              console.error("Unlink failed :", err);
+            } else {
+              console.log("File deleted");
+            }
+          });
+          return res.status(200).json({ message: "Post successfully updated" });
+        }
+      );
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
   }
 };
 
