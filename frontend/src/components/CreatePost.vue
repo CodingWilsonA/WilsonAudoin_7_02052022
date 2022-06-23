@@ -1,7 +1,7 @@
 <template>
     <div class="createPost">
         <h2>Créez votre post ici</h2>
-        <v-text-field v-model="postText" label="Exprimez-vous"></v-text-field>
+        <v-textarea auto-grow rows="1" v-model="postText" label="Exprimez-vous"></v-textarea>
         <div class="createPost--buttonsContainer">
             <img v-if="imageUrl" :src="this.imageUrl" class="createPost--buttonsContainer--postImage"/>
             <add-image @send-img-url="setImageUrl"/>

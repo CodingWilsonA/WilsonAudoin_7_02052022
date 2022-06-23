@@ -2,7 +2,7 @@
     <div>
         <button @click="togglePostModification">Modifier ce post</button>
         <div v-if="displayPostModification" class="postModification">
-            <v-text-field v-model="postModificationText" label="Modifiez le texte de votre post ici"></v-text-field>
+            <v-textarea auto-grow rows="1" v-model="postModificationText" label="Modifiez le texte de votre post ici"></v-textarea>
             <p class="errorMessage" v-if="errorMessage">{{ errorMessage }}</p>
             <div class="postModification--buttons">
                 <button v-if="postModificationText === ''" class="postModification--buttons__invalid">Mettre à jour</button>
