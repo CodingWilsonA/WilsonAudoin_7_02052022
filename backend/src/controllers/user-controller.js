@@ -14,15 +14,26 @@ const signup = async (req, res) => {
       password: hashedPassword,
     });
     db.query(
-      "INSERT INTO users (first_name, last_name, email, password) VALUES (?,?,?,?)",
+      `INSERT INTO users (first_name, last_name, email, password) VALUES (?,?,?,?);
+      SELECT user_id, auth_lvl FROM users WHERE user_id = (SELECT LAST_INSERT_ID());`,
       [user.firstName, user.lastName, user.email, user.password],
-      function (err) {
+      function (err, queryResponses) {
         if (err) {
           return res
             .status(400)
             .json({ message: `Bad request : ${err.message}` });
         }
-        return res.status(201).json({ message: "User sucessfully created" });
+        if (queryResponses) {
+          userData = queryResponses[1][0];
+          return res.status(201).json({
+            message: "User sucessfully created",
+            userId: userData.user_id,
+            userAuthLvl: userData.auth_lvl,
+            token: jwt.sign({ userId: userData.user_id }, config.jwtSalt, {
+              expiresIn: "2h",
+            }),
+          });
+        }
       }
     );
   } catch (err) {
