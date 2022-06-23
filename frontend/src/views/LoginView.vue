@@ -43,14 +43,17 @@ export default {
           })
         }
         catch (err) {
+          console.log(err)
           if (err.code === "ERR_NETWORK") {
             this.errorMessage = 'Le serveur de l\'application est actuellement indisponible. Veuillez essayer ultérieurement.'
-            console.error(err.response.message)
+            console.error(err.response)
             return
-          } else if (err.code === "ERR_BAD_REQUEST") {
+          } else if (err.response.data.message === "Wrong credentials") {
             this.errorMessage = 'Ces identifiants ne correspondent à aucun utilisateur enregistré.'
-            console.error(err.response.message)
+            console.error(err.response.data.message)
             return
+          } else if (err.response.data.message === "Some field contains a forbidden value") {
+            this.errorMessage = "Les caractères spéciaux suivants ne peuvent pas être utilisés : < > \" ' ` $"
           }
         }
       } else {

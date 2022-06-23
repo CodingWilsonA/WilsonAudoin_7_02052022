@@ -4,7 +4,19 @@ const config = require("../config/config");
 const db = require("../services/database");
 const userModel = require("../models/user-model");
 
+const sanitizeRegExp = /[<>"'`$]/gm;
+
 const signup = async (req, res) => {
+  if (
+    sanitizeRegExp.test(req.body.email) ||
+    sanitizeRegExp.test(req.body.firstName) ||
+    sanitizeRegExp.test(req.body.lastName) ||
+    sanitizeRegExp.test(req.body.password)
+  ) {
+    return res
+      .status(401)
+      .json({ message: "Some field contains a forbidden value" });
+  }
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   try {
     const user = await userModel.validateAsync({
@@ -42,6 +54,14 @@ const signup = async (req, res) => {
 };
 
 const login = async (req, res) => {
+  if (
+    sanitizeRegExp.test(req.body.email) ||
+    sanitizeRegExp.test(req.body.password)
+  ) {
+    return res
+      .status(401)
+      .json({ message: "Some field contains a forbidden value" });
+  }
   if (req.body.email !== "" && req.body.password !== "") {
     try {
       const user = await userModel.validateAsync({
