@@ -55,11 +55,20 @@ export default {
     async register() {
       this.validEmail = false
       try {
-        await SignupService.register({
+        const signupServiceresponse = await SignupService.register({
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
         password: this.password
+      })
+      const groupoUser = {
+        token: signupServiceresponse.data.token,
+        userId: signupServiceresponse.data.userId,
+        userAuthLvl: signupServiceresponse.data.userAuthLvl
+      }
+      localStorage.setItem('groupoUser', JSON.stringify(groupoUser))
+      this.$router.push({
+        name: 'main'
       })
       } catch (err){
         if (err.response.data && err.response.data.message.includes('Duplicate')) {
