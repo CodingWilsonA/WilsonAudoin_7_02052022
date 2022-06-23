@@ -3,6 +3,7 @@
         <button @click="togglePostModification">Modifier ce post</button>
         <div v-if="displayPostModification" class="postModification">
             <v-text-field v-model="postModificationText" label="Modifiez le texte de votre post ici"></v-text-field>
+            <p class="errorMessage" v-if="errorMessage">{{ errorMessage }}</p>
             <div class="postModification--buttons">
                 <button v-if="postModificationText === ''" class="postModification--buttons__invalid">Mettre à jour</button>
                 <button v-else @click="updatePost">Mettre à jour</button>
@@ -20,7 +21,8 @@ export default {
     data() {
         return {
             postModificationText: '',
-            displayPostModification: false
+            displayPostModification: false,
+            errorMessage: '',
         }
     },
     methods: {
@@ -29,14 +31,15 @@ export default {
         },
         async updatePost() {
             try {
-                this.togglePostModification()
+                this.postModificationText = ''
                 await PostsService.updatePost({
                     modifiedContent: this.postModificationText,
                     postId: this.postToModify
                 })
+                this.togglePostModification()
                 this.updatePostsList()
-                this.postModificationText = ''
             } catch (err) {
+                this.errorMessage = "Oops ! Nous n'avons pas pu mettre à jour votre post. Veuillez essayer ultérieurement."
                 console.error(err.message)
             }
         },
@@ -80,6 +83,10 @@ button {
     &:hover {
         opacity: 1;
     }
+}
+.errorMessage {
+    color: red;
+    text-shadow: 0px 0px 1px black;
 }
 
 </style>

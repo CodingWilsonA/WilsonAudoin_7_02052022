@@ -40,7 +40,7 @@ export default {
         this.errorMessage = ''
         this.updatePostsList()
       } catch (err) {
-        this.errorMessage = 'Oups ! votre post n\'a pas pu être créé. Veuillez réessayer ultérieurement.'
+        this.errorMessage = 'Oups ! Votre post n\'a pas pu être créé. Veuillez réessayer ultérieurement.'
         this.postText = ''
         console.error(err.response.data)
         }

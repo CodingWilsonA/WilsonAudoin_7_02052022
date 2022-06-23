@@ -3,15 +3,15 @@
         <p>
             {{ content }}
         </p>
-        <img v-if="imgUrl" :src="imgUrl">
+        <img v-if="imgUrl" :src="imgUrl" alt="Image postée par un utilisateur." loading="lazy">
         <add-like 
             @update-posts-list="updatePostsList"
             :postLikes="this.likes"
             :likedPostId="this.postId"
             :userIdLiked="this.$store.state.userId"
         />
-        <p>Créé le : {{ this.formatDate(creationDate) }} par {{ authorFirstName }} {{ authorLastName }}</p>
-        <p v-if="updateDate !== null">Modifié le: {{ this.formatDate(updateDate) }}</p>
+        <p class="post--creationDate">Créé le : {{ this.formatDate(creationDate) }} par {{ authorFirstName }} {{ authorLastName }}</p>
+        <p class="post--updateDate" v-if="updateDate !== null">Modifié le : {{ this.formatDate(updateDate) }}</p>
         <div v-if="authorId === this.$store.state.userId || this.$store.state.userAuthLvl === 1">
             <modify-post 
                 @update-posts-list="updatePostsList"
@@ -73,11 +73,17 @@ export default {
     box-shadow: 0px 0px 10px #FFD7D7;
     border-radius: 20px;
     background:rgba(78,81,102,0.65);
+    &--creationDate, &--updateDate {
+        font-size: 0.8em;
+    }
 }
 
 @media screen and (max-width: 770px) {
     .post {
         width: 80vw;
+        & img {
+            max-width: 100%;
+        }
     }
 }
 </style>
