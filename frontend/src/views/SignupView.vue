@@ -79,7 +79,9 @@ export default {
           this.errorMessage = 'Le serveur de l\'application est actuellement indisponible. Veuillez essayer ultérieurement.'
           console.error(err.message)
           return
-        } 
+        } else if (err.response.data.message === "Some field contains a forbidden value") {
+          this.errorMessage = "Les caractères spéciaux suivants ne peuvent pas être utilisés : < > \" ' ` $"
+        }
       }
     }
   }
