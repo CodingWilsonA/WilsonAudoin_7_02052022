@@ -31,11 +31,11 @@ export default {
         },
         async updatePost() {
             try {
-                this.postModificationText = ''
                 await PostsService.updatePost({
                     modifiedContent: this.postModificationText,
                     postId: this.postToModify
                 })
+                this.postModificationText = ''
                 this.togglePostModification()
                 this.updatePostsList()
             } catch (err) {

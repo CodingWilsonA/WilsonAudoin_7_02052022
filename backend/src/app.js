@@ -3,6 +3,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
+const helmet = require("helmet");
 const userRoutes = require("./routes/user-routes");
 const postRoutes = require("./routes/post-routes");
 const app = express();
@@ -19,8 +20,14 @@ var corsOptions = {
 };
 
 app.use(cors());
+app.options("*", cors());
 app.use(morgan("combined"));
 app.use(bodyParser.json());
+app.use(helmet());
+app.use(function (req, res, next) {
+  res.setHeader("Cross-Origin-Resource-Policy", "same-site");
+  next();
+});
 app.use("/images", express.static(path.join(__dirname, "../images")));
 app.use("/api/auth", cors(corsOptions), userRoutes);
 app.use("/api", cors(corsOptions), postRoutes);
