@@ -23,12 +23,12 @@ app.use(cors());
 app.options("*", cors());
 app.use(morgan("combined"));
 app.use(bodyParser.json());
+app.use("/images", express.static(path.join(__dirname, "../images")));
 app.use(helmet());
 app.use(function (req, res, next) {
   res.setHeader("Cross-Origin-Resource-Policy", "same-site");
   next();
 });
-app.use("/images", express.static(path.join(__dirname, "../images")));
 app.use("/api/auth", cors(corsOptions), userRoutes);
 app.use("/api", cors(corsOptions), postRoutes);
 
