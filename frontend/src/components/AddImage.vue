@@ -1,6 +1,6 @@
 <template>
     <form enctype="multipart/form-data" class="createPost--buttonsContainer">
-        <p v-if="errorMessage !== ''">{{ errorMessage }}</p>
+        <p class="createPost--buttonsContainer--errorMessage" v-if="errorMessage !== ''">{{ errorMessage }}</p>
         <label for="getImage" class="createPost--buttonsContainer--button">Ajoutez une image</label>
         <input type="file" ref="imageFile" name="getImage" id="getImage" @change="selectImage">
     </form>
@@ -32,15 +32,15 @@ export default {
                 this.sendImageUrlToParent()
                 this.errorMessage = ""
             } catch(err) {
-                if (err.response.data.message === "INVALID_FILE_TYPE") {
+                if (err.response.data && err.response.data.message === "INVALID_FILE_TYPE") {
                     this.errorMessage = "Vous pouvez seulement ajouter des fichiers de type image (jpg, jpeg, png ou gif)."
                     console.error(err.response.data.message)
-                } else if (err.response.data.message === "INVALID_FILE_SIZE") {
+                } else if (err.response.data && err.response.data.message === "INVALID_FILE_SIZE") {
                     this.errorMessage = "Cette image est trop volumineuse (max: 500Ko)."
                     console.error(err.response.data.message)
                 } else {
-                    this.errorMessage = "Oops ! Nous n'avons pas pu ajouter votre image."
-                    console.error(err.response.data.message)
+                    this.errorMessage = "Oops ! Nous n'avons pas pu ajouter votre image. Veuillez essayer ultérieurement."
+                    console.error(err.code)
                 }
             }
         },
@@ -56,18 +56,22 @@ export default {
 <style scoped lang="scss">
 
 .createPost--buttonsContainer{
-        &--button {
-        cursor: pointer;
-        font-weight: bold;
-        background-color: #FFD7D7;
-        padding: 5px;
-        border-radius: 10px;
-        margin-top: 20px;
-        opacity: 0.7;
-        transition: all ease-in-out 200ms;
-        &:hover {
-            opacity: 1;
+    &--button {
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #FFD7D7;
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 20px;
+    opacity: 0.7;
+    transition: all ease-in-out 200ms;
+    &:hover {
+        opacity: 1;
         }
+    }
+    &--errorMessage {
+        font-weight: bold;
+        text-shadow: 0px 0px 1px black;
     }
 }
     
