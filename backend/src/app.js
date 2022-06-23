@@ -4,9 +4,17 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 const userRoutes = require("./routes/user-routes");
 const postRoutes = require("./routes/post-routes");
 const app = express();
+
+const rateLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 var whitelist = ["http://localhost:8080", "http://127.0.0.1:4200"];
 var corsOptions = {
@@ -29,6 +37,7 @@ app.use(function (req, res, next) {
   res.setHeader("Cross-Origin-Resource-Policy", "same-site");
   next();
 });
+app.use("/api/auth/login", rateLimiter);
 app.use("/api/auth", cors(corsOptions), userRoutes);
 app.use("/api", cors(corsOptions), postRoutes);
 
