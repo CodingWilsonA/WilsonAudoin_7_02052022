@@ -73,6 +73,10 @@ export default {
     box-shadow: 0px 0px 10px #FFD7D7;
     border-radius: 20px;
     background:rgba(78,81,102,0.65);
+    & img {
+        max-height: 300px;
+        max-width: 100%;
+    }
     &--creationDate, &--updateDate {
         font-size: 0.8em;
     }
@@ -81,9 +85,6 @@ export default {
 @media screen and (max-width: 770px) {
     .post {
         width: 80vw;
-        & img {
-            max-width: 100%;
-        }
     }
 }
 </style>
