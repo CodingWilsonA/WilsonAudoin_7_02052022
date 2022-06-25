@@ -16,6 +16,7 @@
             <modify-post 
                 @update-posts-list="updatePostsList"
                 :postToModify="this.postId"
+                :placeHolder="this.content"
             />
             <delete-post 
                 @update-posts-list="updatePostsList"

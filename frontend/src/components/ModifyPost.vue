@@ -22,7 +22,7 @@ export default {
     data() {
         return {
             imageFile: '',
-            postModificationText: '',
+            postModificationText: this.placeHolder,
             postModificationImageUrl: '',
             displayPostModification: false,
             errorMessage: '',
@@ -40,7 +40,6 @@ export default {
                     modifiedImage: this.postModificationImageUrl,
                     postId: this.postToModify
                 })
-                this.postModificationText = ''
                 this.imageFile = ''
                 this.postModificationImageUrl = ''
                 this.togglePostModification()
@@ -83,7 +82,8 @@ export default {
         }
     },
     props: {
-        postToModify: Number
+        postToModify: Number,
+        placeHolder: String,
     }
    
 }
