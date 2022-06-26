@@ -91,7 +91,6 @@ const deletePost = (req, res) => {
 };
 
 const modifyPost = (req, res) => {
-  console.log(req.body);
   if (req.body.modifiedContent !== "" && req.body.modifiedImage !== "") {
     try {
       db.query(
@@ -104,17 +103,20 @@ const modifyPost = (req, res) => {
           req.body.postId,
         ],
         function (err, queryResponses) {
+          console.log(queryResponses);
           if (err) {
             return res.status(400).json({ message: err.message });
           }
-          const fileName = queryResponses[0][0].img_url.split("/images/")[1];
-          fs.unlink(`images/${fileName}`, (err) => {
-            if (err) {
-              console.error("Unlink failed :", err);
-            } else {
-              console.log("File deleted");
-            }
-          });
+          if (queryResponses[0][0].img_url !== null) {
+            const fileName = queryResponses[0][0].img_url.split("/images/")[1];
+            fs.unlink(`images/${fileName}`, (err) => {
+              if (err) {
+                console.error("Unlink failed :", err);
+              } else {
+                console.log("File deleted");
+              }
+            });
+          }
           return res.status(200).json({ message: "Post successfully updated" });
         }
       );
@@ -146,14 +148,16 @@ const modifyPost = (req, res) => {
           if (err) {
             return res.status(400).json({ message: err.message });
           }
-          const fileName = queryResponses[0][0].img_url.split("/images/")[1];
-          fs.unlink(`images/${fileName}`, (err) => {
-            if (err) {
-              console.error("Unlink failed :", err);
-            } else {
-              console.log("File deleted");
-            }
-          });
+          if (queryResponses[0][0].img_url !== null) {
+            const fileName = queryResponses[0][0].img_url.split("/images/")[1];
+            fs.unlink(`images/${fileName}`, (err) => {
+              if (err) {
+                console.error("Unlink failed :", err);
+              } else {
+                console.log("File deleted");
+              }
+            });
+          }
           return res.status(200).json({ message: "Post successfully updated" });
         }
       );

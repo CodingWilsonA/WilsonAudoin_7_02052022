@@ -90,7 +90,8 @@ export default {
     display: flex;
     justify-content: center;
     &--heartIcon {
-        fill: #FD2D01;
+        fill: #4E5166;
+        stroke: white;
         width: 25px;
         cursor: pointer;
         transform: scale(1);
@@ -100,9 +101,8 @@ export default {
         }
         &__invalid {
             overflow: visible;
-            stroke: white;
             stroke-width: 20px;
-            fill: #4E5166;
+            fill: #FD2D01;
             cursor: default;
             &:hover {
                 transform: scale(1);
