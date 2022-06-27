@@ -132,26 +132,26 @@ Le projet consiste à construire un réseau social interne pour les employés de
 
 ### Installation
 
-1.  Dans un dossier vide, clonez le repository depuis : https://github.com/CodingWilsonA/WilsonAudoin_7_02052022. Une fois cloné, exécutez la commande **npm install** depuis le dossier backend puis **npm start** depuis un premier terminal pour démarrer le server. Attention à bien utiliser le port 8081.
+1.  Dans un dossier vide, clonez le repository depuis : https://github.com/CodingWilsonA/WilsonAudoin_7_02052022. Une fois cloné, exécutez la commande **npm install** puis **npm start** depuis un premier terminal dont le pwd est /backend pour démarrer le serveur. Attention à bien utiliser le port 8081.
 
 2.  À la racine du dossier backend, créez un dossier nommé "env" dans lequel vous devez créer le fichier "default.env". Dans ce fichier, ajoutez les lignes suivantes à l'aide d'un éditeur de code :
 
         1. DB_HOST=localhost
         2. DB_NAME=groupomania
-        3. DB_USER=groupoadmin
-        4. DB_PASSWORD=admin1234
+        3. DB_USER="identifiant de votre serveur SQL"
+        4. DB_PASSWORD="mot de passe de votre serveur SQL"
         5. TOKEN_SALT=MY_SECRET_TOKEN_SALT
 
 3.  À la racine du dossier backend, créez également un dossier nommé "images".
 
-4.  Depuis le dossier frontend, exécutez la commande **npm install** depuis un deuxième terminal.
+4.  Exécutez la commande **npm install** depuis un deuxième terminal dont le pwd est /frontend.
 
-5.  Une fois le nom de domaine avec éventuel sous-domaine récupéré de Groupomania, il faudra l'ajouter dans le fichier app.js situé dans le dossier backend. Dans ce fichier, un tableau est capturé par la variable "whitelist". Ajoutez le nom de domaine de Groupomania au tableau pour l'autoriser à échanger des ressources avec le serveur.
+5.  Si vous utilisez un domaine autre que http://localhost:8080 ou http://127.0.0.1:4200 pour lancer le frontend, il faudra l'ajouter dans le fichier app.js situé dans le dossier backend. Dans ce fichier, un tableau est capturé par la variable "whitelist". Ajoutez le nom de domaine en question au tableau pour l'autoriser à échanger des ressources avec le serveur.
 
 ### Development
 
-1. Depuis le dossier frontend, excécutez la commande **yarn serve** depuis un terminal pour lancer le serveur de développement. Veillez à bien utiliser le port 8080.
+1. Depuis le dossier frontend, excécutez la commande **yarn serve** depuis le deuxième terminal pour lancer le serveur de développement. Veillez à bien utiliser le port 8080.
 
 ### Production
 
-1. Depuis le dossier frontend, exécutez la commande **yarn build** depuis un terminal qui écrasera les fichiers et dossiers contenus dans le répertoire frontend/dist. Téléversez ensuite le contenu du répertoire dist vers un serveur distant.
+1. Depuis le dossier frontend, exécutez la commande **yarn build** depuis un terminal qui écrasera les fichiers et dossiers contenus dans le répertoire frontend/dist. Téléversez ensuite le contenu du répertoire dist vers un serveur distant ou lancez le fichier index.html dans votre serveur local.
